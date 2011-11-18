@@ -1,0 +1,33 @@
+# Copied from: https://raw.github.com/ohadlevy/puppet-foreman/master/foreman/templates/foreman-vhost.conf.erb
+<VirtualHost <%= ipaddress %>:80>
+  ServerName <%= fqdn %>
+  ServerAlias foreman
+  DocumentRoot <%= scope.lookupvar 'foreman::foreman_dir' %>/public
+<% if has_variable?("lsbdistid") and lsbdistid == 'Ubuntu' || lsbdistid == 'Debian' %>  PassengerAppRoot <%= scope.lookupvar 'foreman::foreman_dir' %><% end %>
+
+  RailsAutoDetect On
+  AddDefaultCharset UTF-8
+
+</VirtualHost>
+
+<VirtualHost <%= ipaddress %>:443>
+  ServerName <%= fqdn %>
+  ServerAlias foreman
+
+  RailsAutoDetect On
+  DocumentRoot <%= scope.lookupvar 'foreman::foreman_dir' %>/public
+  PassengerAppRoot <%= scope.lookupvar 'foreman::foreman_dir' %>
+
+  # Use puppet certificates for SSL
+
+  SSLEngine On
+  SSLCertificateFile      /var/lib/puppet/ssl/certs/<%= fqdn %>.pem
+  SSLCertificateKeyFile   /var/lib/puppet/ssl/private_keys/<%= fqdn %>.pem
+  SSLCertificateChainFile /var/lib/puppet/ssl/certs/ca.pem
+  SSLCACertificateFile    /var/lib/puppet/ssl/certs/ca.pem
+  SSLVerifyClient         optional
+  SSLOptions              +StdEnvVars
+  SSLVerifyDepth          3
+
+</VirtualHost>
+

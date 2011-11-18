@@ -1,0 +1,7 @@
+# /etc/cron.d/ripdublin_puppet: crontab fragment for ripdublin
+# *** Beware *** This file is overwritten by Puppet!
+# If you want to avoid this file being written please do this:
+#    touch /root/.PLEASE.NO_CRONTAB_PUPPET (to be implemented on puppet yet)
+
+# Touch a test file in /root/ every 30 minutes
+09,29 * * * *     root    touch ripdublin_test_puppet.touch

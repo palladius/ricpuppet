@@ -1,0 +1,8 @@
+#!/bin/bash
+
+VER=0.9a
+
+echo This is a cheatsheet for RipDublin Puppet module v.$VER
+echo Foreman:
+echo " cd /usr/share/foreman ; RAILS_ENV=production rake puppet:migrate:populate_hosts # import hosts"
+echo " cd /usr/share/foreman ; RAILS_ENV=production rake puppet:import:hosts_and_facts # import hosts"
