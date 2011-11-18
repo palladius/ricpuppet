@@ -1,4 +1,13 @@
 
+= TODO
+
+* Integrate / Investigate: puppet-module . i.e.:
+ puppet-module search iptables
+* modules to do:
+** Hamachi
+** Dropbox
+** MyGicRepo
+** Foreman / Puppet Dashboard
 
 
 = Credits
