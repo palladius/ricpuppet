@@ -1,9 +1,0 @@
-This is possibly the most complex module. Im thinking of something like this:
-
-- Every module exports an array of directories, defaulting to /etc.
--- mysql: [ /etc, /var/lib/mysql, /var/backups ]
--- ldap   [ /etc, /var/lib/ldap/, /var/backups ]
--- ...
-- Every machine has N puppet modules.
-- Every machine with this module installed should merge those in logical OR and then this module should rsync those dir to the backup machine (call it 'backup server' as opposed to 'backup client')
-
