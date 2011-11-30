@@ -1,0 +1,6 @@
+
+How to appply
+
+local-apply                                            puppet -vd --modulepath=~/git/puppet/ -e 'include helloworld'
+client-dryrun                                          puppetd -vo --no-daemonize --noop --server SERVERNAME
+client-normale                                         puppetd -vo --no-daemonize --server SERVERNAME
