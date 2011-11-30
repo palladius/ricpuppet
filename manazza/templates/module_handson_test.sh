@@ -3,7 +3,7 @@
 # to exit if any statement returns a non-true value (i.e. 0)
 set -e
 
-echo starting smoke test for the "handson" class 
+echo starting smoke test for the "manazza" class 
 
 if ! grep "^<%=user_name%>:" /etc/passwd; then echo "user '<%=user_name%> not created.; exit 1; fi
 
