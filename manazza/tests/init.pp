@@ -1,1 +1,1 @@
-class handson{'bob': user_name => 'bob', }
+class manazza{'bob': user_name => 'bob', }

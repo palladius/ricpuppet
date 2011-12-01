@@ -1,4 +1,4 @@
-# Class: handson
+# Class: manazza
 #
 # This class setup a user account with home and ssh connectivity
 #
@@ -10,9 +10,9 @@
 #   make sure the machine is ssh capable
 #
 # Sample Usage:
-#   class handson{'bob': user_name => 'bob', }
+#   class manazza{'bob': user_name => 'bob', }
 #
-class handson ( $user_name ) {
+class manazza ( $user_name ) {
   
   # the extropy base class setup ssh... amongst other goodness  
   include base
@@ -38,12 +38,12 @@ class handson ( $user_name ) {
   file {"$user_name_athorized_keys":
     ensure  => present,
     path    => "$user_home/.ssh/authorized_keys",
-    source  => "handson/authorized_keys",
+    source  => "manazza/authorized_keys",
     mode    => '0600',
     owner   => '$user_name',
     require     => [File["$user_home/.ssh"], User[$user_name]];
   }
   
-  test {'test_for_hanson_class': script_name => 'hansdon/module_handson_test.sh'; }
+  test {'test_for_hanson_class': script_name => 'hansdon/module_manazza_test.sh'; }
   
 }

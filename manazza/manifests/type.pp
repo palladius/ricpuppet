@@ -15,9 +15,9 @@
 #   Creates a create a user, sets its home and ssh authorized keys and ensure ssh capabilities to the system
 #
 # Sample Usage:
-#   handson::type {'bob': ensure => 'present'; }
+#   manazza::type {'bob': ensure => 'present'; }
 #
-define handson::type ($user_name, $ensure = 'present'){
+define manazza::type ($user_name, $ensure = 'present'){
 
   # the extropy base class setup ssh... amongst other goodness...  
   include base
@@ -51,7 +51,7 @@ define handson::type ($user_name, $ensure = 'present'){
   file {"$user_name_athorized_keys":
     ensure  => $ensure_filtered,
     path    => "$user_home/.ssh/authorized_keys",
-    source  => "handson/authorized_keys",
+    source  => "manazza/authorized_keys",
     mode    => '0600',
     owner   => '$user_name',
     require     => [File["$user_home/.ssh"], User[$user_name]];

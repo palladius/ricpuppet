@@ -1,13 +1,13 @@
-class handson::type::test {
+class manazza::type::test {
 
     $user_name = 'bob'
 
-    handson::type {$user_name:
+    manazza::type {$user_name:
         ensure  => present;
     }
 
-    test {'test_for_handson_type': script_name => 'handson/module_handson_test.sh'; }
+    test {'test_for_manazza_type': script_name => 'manazza/module_manazza_test.sh'; }
 
 }
 
-include handson::type::test
+include manazza::type::test
