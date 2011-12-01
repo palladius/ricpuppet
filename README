@@ -9,10 +9,15 @@
 ** MyGicRepo
 ** Foreman / Puppet Dashboard
 
+= TODO
+
 * Integrate with this intriguing page:
 ** http://projects.reductivelabs.com/projects/puppet/wiki/Cron_Patterns
 
+Interesting:
+	http://www.ctrip.ufl.edu/puppet-module-debian-lenny
 = Credits
 
 * Loggly - taken fromn them many repos
 * http://docs.puppetlabs.com/references/latest/type.html
+
