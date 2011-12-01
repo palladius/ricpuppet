@@ -15,7 +15,10 @@
 class manazza ( $user_name ) {
   
   # the extropy base class setup ssh... amongst other goodness  
-  include base
+  # include base
+  # include vanilla # maybe better?
+
+  manazza::mytype {'test-mytype-puppet-ric': ensure => 'present'; }
   
   $user_home = "/home/$user_name"
   
@@ -44,6 +47,6 @@ class manazza ( $user_name ) {
     require     => [File["$user_home/.ssh"], User[$user_name]];
   }
   
-  test {'test_for_hanson_class': script_name => 'hansdon/module_manazza_test.sh'; }
+  test {'test_for_hanson_class': script_name => 'hansdon/module_manazza_test.sh.erb'; }
   
 }

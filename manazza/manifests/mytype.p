@@ -1,4 +1,4 @@
-# Type: test
+# Type: mytype
 #
 # This type is a wrapper to create users
 #
@@ -15,9 +15,9 @@
 #   Creates a create a user, sets its home and ssh authorized keys and ensure ssh capabilities to the system
 #
 # Sample Usage:
-#   manazza::type {'bob': ensure => 'present'; }
+#   manazza::mytype {'bob': ensure => 'present'; }
 #
-define manazza::type ($user_name, $ensure = 'present'){
+define manazza::mytype ($user_name, $ensure = 'present'){
 
   # the extropy base class setup ssh... amongst other goodness...  
   include base
