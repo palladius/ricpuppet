@@ -18,7 +18,8 @@ class manazza ( $user_name ) {
   # include base
   # include vanilla # maybe better?
 
-  manazza::mytype {'test-mytype-puppet-ric': ensure => 'present'; }
+  manazza::user_with_homedir_and_sshkeys {'testpuppetric1': ensure => 'present'; }
+  manazza::user_with_homedir_and_sshkeys {'testpuppetric2': ensure => 'present'; }
   
   $user_home = "/home/$user_name"
   

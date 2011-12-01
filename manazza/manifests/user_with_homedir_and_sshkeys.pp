@@ -1,7 +1,7 @@
-# Type: mytype
+# Type: user_with_homedir_and_sshkeys
 #
-# This type is a wrapper to create users
-#
+# This type ('user_with_homedir_and_sshkeys') is a wrapper to create users. 
+
 # Parameters:
 #   $user_name:
 #     the name of the user
@@ -15,9 +15,9 @@
 #   Creates a create a user, sets its home and ssh authorized keys and ensure ssh capabilities to the system
 #
 # Sample Usage:
-#   manazza::mytype {'bob': ensure => 'present'; }
+#   manazza::user_with_homedir_and_sshkeys {'bob': ensure => 'present'; }
 #
-define manazza::mytype ($user_name, $ensure = 'present'){
+define manazza::user_with_homedir_and_sshkeys ($user_name, $ensure = 'present'){
 
   # the extropy base class setup ssh... amongst other goodness...  
   include base
