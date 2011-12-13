@@ -1,4 +1,4 @@
 *.swp
 .project
-a~
+*~
 rake_test.*
