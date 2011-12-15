@@ -4,7 +4,7 @@ buildserver
 cazzodicane
 debian
 _docs
-etckeeper             OK (from web)
+etckeeper             BUG (from web):  Execution of '/etc/puppet/etckeeper-commit-pre' returned 1
 foremanric
 graphite
 helloworld
