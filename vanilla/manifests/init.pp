@@ -1,42 +1,103 @@
-# Definition: vanilla
+# Class: vanilla
 #
-# This class installs and configures a Vanilla system (base) for the Dell Cloud environment
+# This class configures the dev servers in a standard way common to ALL 
+# machines.
 #
 # Parameters:
-#   none
+#   None at the moment
 #
 # Actions:
-# - Install & Configures git, ssh-server, creates /opt/rcarlesso/
-#
-# Requires:
-# - Nothing
+#   ensure that the machine has an agreed directory structure.
+#   Creates dirs/files as per wiki docs (/opt/riccardo/, ...)
 #
 # Sample Usage:
-#  include vanilla
-# or:
-#  class {'vanilla': }
-#
-class vanilla () {
-    package {'git':
-        ensure => latest,
-    }
+#   class { 'vanilla' }
 
-	# TODO refactor into openssh-server module!
-    service {'openssh-server':
-        ensure  => running,
-        enable  => true,
-        require => Package['openssh-server'],
-    }
-    
-    include 'backup:client'
-    
-    ## The root password will be blank on a new install
-    #exec {'set-root-password-if-blank':
-    #    onlyif  => "/usr/bin/mysql -uroot --password=",
-    #    command => "/usr/bin/mysql -uroot --password= -e \"UPDATE mysql.user \
-    #               SET Password=PASSWORD('$root_passwd') WHERE \
-    #               User='root'; \
-    #               FLUSH PRIVILEGES;\"",
-    #    require => Service["mysql"],
-    #}
+class vanilla () {
+  # Please populate the HISTORY package
+  $version = "0.9.1"
+  $verbose = true
+  $basepath = "/opt/riccardo"
+  $root_path_addon = "$basepath/bin:$basepath/sbin"
+  $user_path_addon = "$basepath/bin"
+  $vanilla_template_header = "\
+#############################################################################
+# BEWARE! This file is managed by Puppet (Vanilla v$version).
+# Change at your own risk!
+#############################################################################"
+
+  Exec { path => [
+    "/usr/bin",
+    "/usr/sbin",
+    "$basepath/bin",
+    "$basepath/sbin",
+  ] }
+
+  # If you put them in order, puppet will do the correct thing and won't need the dependencies ;)
+  $vanilla_skeleton_dirs = [
+    "$basepath",
+    "$basepath/bin",
+    "$basepath/etc",
+    "$basepath/man",
+    "$basepath/sbin",
+    "$basepath/tmp",
+    "$basepath/var",
+    "$basepath/var/log",
+  ]
+
+  file { $vanilla_skeleton_dirs:
+    ensure => "directory",
+    owner  => "root",
+    #group  => "riccardo",
+    mode   => 750,
+    # normal users can't get in
+  }
+
+  # puts the version in /opt/riccardo/VERSION
+  file { "$basepath/VERSION":
+    ensure => present,
+    recurse => true,
+    content => "$version",
+    require => File[$basepath],
+  }
+
+  ## TEMPLATES
+  file { "$basepath/LICENSE":
+    ensure  => present,
+    content => template('vanilla/LICENSE.erb'),
+    require => File[$basepath],
+  }
+
+  file { "$basepath/README":
+    ensure => present,
+    content => template('vanilla/README.erb'),
+    require => File[$basepath],
+  }
+
+  file { "$basepath/HISTORY":
+    ensure => present,
+    content => template('vanilla/HISTORY.erb'),
+    require => File[$basepath],
+  }
+
+  file { "/root/.bashrc.riccardo":
+    ensure => present,
+    content => template('vanilla/bashrc.riccardo.erb'),
+    require => File[$basepath],
+  }
+
+  # Symlinking our logs into /var/log/riccardo/
+  file {"/var/log/riccardo":
+    force   => true,
+    ensure  => "$basepath/var/log",
+    require => File["$basepath/var/log"],
+  }
+
+  # For automated backup pulls
+  user { "ricbackup":
+    ensure     => "present",
+    password   => 'YouWillNeverGuessThis21387frebjhq43',
+    managehome => true,
+  }
+
 }
