@@ -1,3 +1,4 @@
+== Generic documentation ==
 
 # Class: users
 #
