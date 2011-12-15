@@ -74,6 +74,12 @@ class vanilla () {
     require => File[$basepath],
   }
 
+  file { "$basepath/TODO":
+    ensure => present,
+    content => template('vanilla/TODO.erb'),
+    require => File[$basepath],
+  }
+
   file { "$basepath/HISTORY":
     ensure => present,
     content => template('vanilla/HISTORY.erb'),
