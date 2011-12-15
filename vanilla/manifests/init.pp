@@ -15,7 +15,7 @@
 
 class vanilla () {
   # Please populate the HISTORY package
-  $version = "0.9.1"
+  $version = "0.9.7"
   $verbose = true
   $basepath = "/opt/riccardo"
   $root_path_addon = "$basepath/bin:$basepath/sbin"
@@ -56,7 +56,6 @@ class vanilla () {
   # puts the version in /opt/riccardo/VERSION
   file { "$basepath/VERSION":
     ensure => present,
-    recurse => true,
     content => "$version",
     require => File[$basepath],
   }

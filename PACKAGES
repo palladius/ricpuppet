@@ -1,0 +1,24 @@
+apt
+_bin
+buildserver
+cazzodicane
+debian
+_docs
+etckeeper             OK (from web)
+foremanric
+graphite
+helloworld
+iptables
+java
+manazza
+mediawiki
+nagios
+PACKAGES
+puppet
+README
+ric-etckeeper
+ric-zookeeper
+ripdublin
+user
+vanilla      		   OK (from me but extensively tested)
+virtualbox
