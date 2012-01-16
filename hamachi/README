@@ -1,0 +1,11 @@
+
+This module will install hamachi into a Ubuntu box.
+
+todo: 
+
+ dpkg -i logmein-hamachi_2.1.0.17-1_i386.deb
+ apt-get update
+ apt-get dist-upgrade
+ apt-get install hamachi
+
+
