@@ -1,15 +1,14 @@
 
+Welcome to my puppet moduoles.
+Only a few of these are 'production', the other are just tests.
+Please bear with me for a few more months ok?
+
 = TODO
 
 * Integrate / Investigate: puppet-module . i.e.:
  puppet-module search iptables
-* modules to do:
-** Hamachi
-** Dropbox
 ** MyGicRepo
-** Foreman / Puppet Dashboard
 
-= TODO
 
 * Integrate with this intriguing page:
 ** http://projects.reductivelabs.com/projects/puppet/wiki/Cron_Patterns
