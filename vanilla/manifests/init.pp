@@ -53,6 +53,17 @@ class vanilla () {
     # normal users can't get in
   }
 
+  file { "/root/HISTORY_SYSADMIN":
+    ensure => present
+    # Write if not exists the following:
+    #   # Please keep this up to date!
+    #   $DATE Added HISTORY FILE and PUPPETIZED HOST
+    #   HOSTNAME: hostname -f
+    #   DISTRO:   lsb_release -a
+    #content => template('vanilla/README.erb'),
+    #require => File[$basepath],
+  }
+
   # puts the version in /opt/riccardo/VERSION
   file { "$basepath/VERSION":
     ensure => present,
