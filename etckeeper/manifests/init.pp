@@ -38,7 +38,7 @@ class etckeeper {
   file {
     "/etc/etckeeper/etckeeper.conf":
       ensure => present,
-      content => template("etckeeper/etckeeper.conf.erb"),
+      content => template("etckeeper/etckeeper.conf"),
       require => Package["etckeeper"];
   }
 
