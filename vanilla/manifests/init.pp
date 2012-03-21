@@ -60,7 +60,7 @@ class vanilla () {
     #   $DATE Added HISTORY FILE and PUPPETIZED HOST
     #   HOSTNAME: hostname -f
     #   DISTRO:   lsb_release -a
-    #content => template('vanilla/README.erb'),
+    #content => template('vanilla/README'),
     #require => File[$basepath],
   }
 
@@ -74,31 +74,31 @@ class vanilla () {
   ## TEMPLATES
   file { "$basepath/LICENSE":
     ensure  => present,
-    content => template('vanilla/LICENSE.erb'),
+    content => template('vanilla/LICENSE'),
     require => File[$basepath],
   }
 
   file { "$basepath/README":
     ensure => present,
-    content => template('vanilla/README.erb'),
+    content => template('vanilla/README'),
     require => File[$basepath],
   }
 
   file { "$basepath/TODO":
     ensure => present,
-    content => template('vanilla/TODO.erb'),
+    content => template('vanilla/TODO'),
     require => File[$basepath],
   }
 
   file { "$basepath/HISTORY":
     ensure => present,
-    content => template('vanilla/HISTORY.erb'),
+    content => template('vanilla/HISTORY'),
     require => File[$basepath],
   }
 
   file { "/root/.bashrc.riccardo":
     ensure => present,
-    content => template('vanilla/bashrc.riccardo.erb'),
+    content => template('vanilla/bashrc.riccardo'),
     require => File[$basepath],
   }
 
