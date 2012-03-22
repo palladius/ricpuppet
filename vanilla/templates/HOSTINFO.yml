@@ -1,0 +1,14 @@
+<%= vanilla_template_header %>
+# Extracted with facter, conceptually
+host_info:
+  hostname:  <%= hostname %>
+  machine_description: <%= machine_description %>
+  virtual:   <%= virtual %>
+  hostname:  <%= hostname %>
+  domain:    <%= domain %>
+---
+array test:
+<% facter_fun_facts.each do |fact| %>
+  <%= fact%>: # <%= scope.lookupvar('vanilla::' + fact.to_s ) %>
+<% end %>
+---

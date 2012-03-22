@@ -21,14 +21,17 @@ class vanilla ($machine_description = 'Sorry, no info provided') {
   $root_path_addon = "$basepath/bin:$basepath/sbin"
   $user_path_addon = "$basepath/bin"
   $history = '
-0.9.12 20120323 Machine Description added!
-0.9.11 20120323 History made variable, merged programmatically with old branch
-0.9.10 20120323 Adding mandatory packages
+0.9.12 20120322 Added hostinfo in YAML representation :)
+0.9.12 20120322 Machine Description added!
+0.9.11 20120322 History made variable, merged programmatically with old branch
+0.9.10 20120322 Adding mandatory packages
 0.9.9  20120322 Adding $vanilladir/downloadz
 0.9.8  20120321 Adding host history
 0.9.7  2011xxxx Cant remember, i guess all the DIR infrastructure
 0.9.1  2011???? Added LICENSE,README,.bashrc, Common HEADER'
 
+  # Interesting paramteres collected by facter
+  $facter_fun_facts = ['hostname','domain','fqdn','physicalprocessorcount']
   $mandatory_packages = [
     'bash-completion' , # how can u live without it?
     'git',              # ditto
@@ -122,6 +125,12 @@ class vanilla ($machine_description = 'Sorry, no info provided') {
   file { "$basepath/HISTORY":
     ensure  => present,
     content => template('vanilla/HISTORY'),
+    require => File[$basepath],
+  }
+
+  file { "$basepath/HOSTINFO.yml":
+    ensure  => present,
+    content => template('vanilla/HOSTINFO.yml'),
     require => File[$basepath],
   }
 

@@ -20,7 +20,7 @@ class etckeeper {
   include vanilla
 
   # Used in the template
-  case $operatingsystem {
+  case $::operatingsystem {
     fedora: {
       $highlevel_package_manager = 'yum'
       $lowlevel_package_manager  = 'rpm'
@@ -29,7 +29,7 @@ class etckeeper {
       $highlevel_package_manager = 'apt'
       $lowlevel_package_manager  = 'dpkg'
     }
-    default: {fail("Etckeeper doesn't know how to handle ${operatingsystem}")}
+    default: {fail("Etckeeper doesn't know how to handle ${::operatingsystem}")}
   }
 
   package { 'etckeeper':
