@@ -15,21 +15,34 @@
 
 class vanilla () {
   # Please populate the HISTORY package
-  $version = '0.9.10'
+  $version = '0.9.11'
   $verbose = true
   $basepath = '/opt/riccardo'
   $root_path_addon = "$basepath/bin:$basepath/sbin"
   $user_path_addon = "$basepath/bin"
-  $base_packages = ['git','bash-completion']
+  $history = '
+0.9.11 20120323 History made variable, merged programmatically with old branch
+0.9.10 20120323 Adding mandatory packages
+0.9.9  20120322 Adding $vanilladir/downloadz
+0.9.8  20120321 Adding host history
+0.9.7  2011xxxx Cant remember, i guess all the DIR infrastructure
+0.9.1  2011???? Added LICENSE,README,.bashrc, Common HEADER'
+
+  $mandatory_packages = [
+    'bash-completion' , # how can u live without it?
+    'git',              # ditto
+    #'etckeeper',        # use its module instead
+  ]
   $vanilla_template_header = "\
 #############################################################################
 # BEWARE! This file is managed by Puppet (Vanilla v$version).
 # Change at your own risk!
 #############################################################################"
 
+
   # guarantees these base packages are installed everywhere :)
-  package { $base_packages:
-    ensure  => 'installed',
+  package {$mandatory_packages:
+    ensure => 'installed'
   }
   #TODO require etckeeper module as well
 
@@ -58,8 +71,8 @@ class vanilla () {
     ensure => 'directory',
     owner  => 'root',
     #group => "riccardo",
-    mode   => '0750',
-    # normal users can't get in
+    mode   => '0755',
+    # otherwise normal users can't get in
   }
 
   file { '/root/HISTORY_SYSADMIN':
