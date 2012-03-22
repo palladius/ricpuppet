@@ -11,10 +11,10 @@
 #   Creates dirs/files as per wiki docs (/opt/riccardo/, ...)
 #
 # Sample Usage:
-#   class { 'vanilla' }
-
+#   class { 'vanilla':
+#     machine_description => 'optional description'
+#   }
 class vanilla ($machine_description = 'Sorry, no info provided') {
-  # Please populate the HISTORY package
   $version = '1.0.01'
   $verbose = true
   $basepath = '/opt/riccardo'
@@ -45,12 +45,17 @@ class vanilla ($machine_description = 'Sorry, no info provided') {
   ]
   $vanilla_template_header = "\
 #############################################################################
-# !!!BEWARE!!! 
+# !!!BEWARE!!!
 #############################################################################
 # This file is managed by Puppet (Vanilla v$version).
 # Change at your own risk!
 #############################################################################"
 
+  #if (defined('machine_description')) {
+  #  $machine_description = "Dan is right: $machine_description"
+  #} else {
+  #  $machine_description = "UNDEFINED DESCRIPTION ($::machine_description)"
+  #}
 
   # guarantees these base packages are installed everywhere :)
   package {$mandatory_packages:

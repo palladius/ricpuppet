@@ -14,11 +14,12 @@
 # Sample Usage:
 #   include hamachi
 #
-
 class hamachi($hamachi_hostname = $hostname) {
   require vanilla
-  $hamachiver = '0.9'
-  $deb_filename = 'logmein-hamachi_2.1.0.17-1_i386.deb'
+  $hamachiver = '0.9.1'
+  # architecture: i386 or what...
+  $deb_filename = "logmein-hamachi_2.1.0.17-1_$::architecture.deb"
+  #$deb_filename = 'logmein-hamachi_2.1.0.17-1_i386.deb' # this works
   $deb_path= "$vanilla::basepath/downloadz/$deb_filename"
 
   # TODO check architecture
