@@ -1,24 +1,19 @@
 apt
 _bin
 buildserver
-cazzodicane
 debian
 _docs
-etckeeper             BUG (from web):  Execution of '/etc/puppet/etckeeper-commit-pre' returned 1
+etckeeper             OK works
 foremanric
 graphite
 helloworld
 iptables
 java
-manazza
 mediawiki
 nagios
-PACKAGES
 puppet
-README
-ric-etckeeper
-ric-zookeeper
+ric-zookeeper      OK lint,tests
 ripdublin
 user
-vanilla      		   OK (from me but extensively tested)
+vanilla      		   OK lint,tests,works
 virtualbox
