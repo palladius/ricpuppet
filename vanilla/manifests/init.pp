@@ -41,8 +41,10 @@ class vanilla ($machine_description = 'Sorry, no info provided') {
   ]
   $mandatory_packages = [
     'bash-completion' , # how can u live without it?
-    'git',              # ditto
+    'gitk',             # ditto (git is called git-core on 10.04 so maybe this)
   ]
+
+
   $vanilla_template_header = "\
 #############################################################################
 # !!!BEWARE!!!
