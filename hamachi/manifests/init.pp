@@ -16,6 +16,7 @@
 #
 class hamachi($hamachi_hostname = $hostname) {
   require vanilla
+
   $hamachiver = '0.9.1'
   # architecture: i386 or what...
   $deb_filename = "logmein-hamachi_2.1.0.17-1_$::architecture.deb"
@@ -50,7 +51,8 @@ class hamachi($hamachi_hostname = $hostname) {
   '$vanilla::basepath/downloadz/puppet-hamachi.v$hamachiver-fixed.touch'",
       creates =>
         "$vanilla::basepath/downloadz/puppet-hamachi.v$hamachiver-fixed.touch",
-      require => Package[ 'logmein-hamachi' ];
+      require => [Package['logmein-hamachi'],
+        File["$vanilla::basepath/downloadz"]];
   }
 
   service {'logmein-hamachi':
@@ -63,5 +65,6 @@ class hamachi($hamachi_hostname = $hostname) {
   file { "$vanilla::basepath/downloadz/puppet-hamachi.TODO.hostname":
       ensure  => present,
       content => "#TODO execute this once:\nhamachi set-nick $hamachi_hostname",
+      require => File["$vanilla::basepath/downloadz"];
   }
 }
