@@ -1,5 +1,6 @@
 <%= vanilla_template_header %>
-0.9.9 20120322 Adding $vanilladir/downloadz
-0.9.8 20120321 Adding host history
-0.9.7 ???????? ????
-0.9.1 2011???? Added LICENSE,README,.bashrc, Common HEADER
+0.9.10 20120323 Adding mandatory packages :)
+0.9.9  20120322 Adding $vanilladir/downloadz
+0.9.8  20120321 Adding host history
+0.9.7  ???????? ????
+0.9.1  2011???? Added LICENSE,README,.bashrc, Common HEADER
