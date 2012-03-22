@@ -32,15 +32,22 @@ class vanilla ($machine_description = 'Sorry, no info provided') {
 0.9.1  2011???? Added LICENSE,README,.bashrc, Common HEADER'
 
   # Interesting paramteres collected by facter
-  $facter_fun_facts = ['hostname','domain','fqdn','physicalprocessorcount']
+  $facter_fun_facts = [
+    'hostname','domain','fqdn','ipaddress',
+    'physicalprocessorcount',
+    'virtual','machine_description',
+    'operatingsystem','operatingsystemrelease',
+    'architecture','uniqueid'
+  ]
   $mandatory_packages = [
     'bash-completion' , # how can u live without it?
     'git',              # ditto
-    #'etckeeper',        # use its module instead
   ]
   $vanilla_template_header = "\
 #############################################################################
-# BEWARE! This file is managed by Puppet (Vanilla v$version).
+# !!!BEWARE!!! 
+#############################################################################
+# This file is managed by Puppet (Vanilla v$version).
 # Change at your own risk!
 #############################################################################"
 
