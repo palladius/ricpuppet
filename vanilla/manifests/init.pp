@@ -13,14 +13,15 @@
 # Sample Usage:
 #   class { 'vanilla' }
 
-class vanilla () {
+class vanilla ($machine_description = 'Sorry, no info provided') {
   # Please populate the HISTORY package
-  $version = '0.9.11'
+  $version = '0.9.12'
   $verbose = true
   $basepath = '/opt/riccardo'
   $root_path_addon = "$basepath/bin:$basepath/sbin"
   $user_path_addon = "$basepath/bin"
   $history = '
+0.9.12 20120323 Machine Description added!
 0.9.11 20120323 History made variable, merged programmatically with old branch
 0.9.10 20120323 Adding mandatory packages
 0.9.9  20120322 Adding $vanilladir/downloadz
@@ -90,6 +91,12 @@ class vanilla () {
   file { "$basepath/VERSION":
     ensure  => present,
     content => $version,
+    require => File[$basepath],
+  }
+
+  file { "$basepath/MACHINE_DESCRIPTION":
+    ensure  => present,
+    content => $machine_description,
     require => File[$basepath],
   }
 
