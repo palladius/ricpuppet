@@ -1,4 +1,5 @@
+
+########################### Added by Puppet ###################################
 # bashrc.inject START
-# Add this ONLY if this doesn't exist
 if [ -f ~/.bashrc.riccardo ] ; then . ~/.bashrc.riccardo ; fi
 # bashrc.inject END

@@ -15,12 +15,13 @@
 
 class vanilla ($machine_description = 'Sorry, no info provided') {
   # Please populate the HISTORY package
-  $version = '0.9.12'
+  $version = '1.0.01'
   $verbose = true
   $basepath = '/opt/riccardo'
   $root_path_addon = "$basepath/bin:$basepath/sbin"
   $user_path_addon = "$basepath/bin"
   $history = '
+1.0.01 20120322 Added bashrc to Riccardo as well
 0.9.12 20120322 Added hostinfo in YAML representation :)
 0.9.12 20120322 Machine Description added!
 0.9.11 20120322 History made variable, merged programmatically with old branch
@@ -99,7 +100,7 @@ class vanilla ($machine_description = 'Sorry, no info provided') {
 
   file { "$basepath/MACHINE_DESCRIPTION":
     ensure  => present,
-    content => $machine_description,
+    content => "$machine_description\n",
     require => File[$basepath],
   }
 
@@ -138,6 +139,37 @@ class vanilla ($machine_description = 'Sorry, no info provided') {
     ensure  => present,
     content => template('vanilla/bashrc.riccardo'),
     require => File[$basepath],
+  }
+  # TODO refactor in a defined type
+  file { '/home/riccardo/.bashrc.riccardo':
+    ensure  => present,
+    owner   => 'riccardo',
+    group   => 'riccardo',
+    content => template('vanilla/bashrc.riccardo'),
+    require => File[$basepath],
+  }
+
+  # Mabnual exec (inelegant)
+  exec {'echo "if [ -f /root/.bashrc.riccardo ] ; \
+then source /root/.bashrc.riccardo ; fi" \
+>> /root/.bashrc':
+    unless  => 'grep "then source /root/.bashrc.riccardo" /root/.bashrc',
+    path    => '/bin';
+  }
+
+  # Include the inject file...
+  file { "$basepath/bashrc.inject":
+    ensure  => present,
+    content => template('vanilla/bashrc.inject'),
+    require => File[$basepath];
+  }
+
+  # catting for user Riccardo.
+  # TODO make it modular for user XXXX'
+  exec {"cat '$basepath/bashrc.inject' >> ~riccardo/.bashrc":
+    unless  => 'grep "bashrc.inject START" ~riccardo/.bashrc',
+    path    => '/bin',
+    require => File["$basepath/bashrc.inject"];
   }
 
   # Symlinking our logs into /var/log/riccardo/
