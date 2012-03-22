@@ -1,6 +1,7 @@
 # Definition: etckeeper
 #
-# This class installs etckeeper (with git) and ensures it is running
+# This class installs etckeeper (forcing conf with git) and ensures it is
+# running.
 #
 # Parameters:
 # - None
@@ -16,42 +17,41 @@
 #
 
 class etckeeper {
-  case $operatingsystem {
-    fedora: {
-      $highlevel_package_manager = "yum"
-      $lowlevel_package_manager  = "rpm"
-    }
-    ubuntu: {
-      $highlevel_package_manager = "apt"
-      $lowlevel_package_manager  = "dpkg"
-    }
-    default: { fail("Don't know how to handle ${operatingsystem}") }
+#  case $operatingsystem {
+#    fedora: {
+#      $highlevel_package_manager = 'yum'
+#      $lowlevel_package_manager  = 'rpm'
+#    }
+#    ubuntu: {
+#      $highlevel_package_manager = 'apt'
+#      $lowlevel_package_manager  = 'dpkg'
+#    }
+#    default: { fail("Don't know how to handle ${operatingsystem}") }
+#  }
+
+  package { 'etckeeper':
+    ensure => installed;
+  }
+  package { 'git':
+    ensure => installed;
   }
 
-  package { etckeeper: 
-  	ensure => installed; 
-  }
-  package { 'git': 
-  	ensure => installed; 
-  }
-
-  file {
-    "/etc/etckeeper/etckeeper.conf":
-      ensure => present,
-      content => template("etckeeper/etckeeper.conf"),
-      require => Package["etckeeper"];
+  file {'/etc/etckeeper/etckeeper.conf':
+    ensure  => present,
+    content => template('etckeeper/etckeeper.conf'),
+      # could work even without but I want to be sure it overwrites the conf..
+    require => Package['etckeeper'];
   }
 
   Exec { path => [
-  	"/usr/bin", 
-  	"/usr/sbin", 
-  	"/opt/dell/bin", 
+    '/usr/bin',
+    '/usr/sbin',
+    '/opt/dell/bin',
   ] }
 
-  exec {
-    "etckeeper_init":
-      command => "etckeeper init",
-      creates => "/etc/.git",
-      require => File["/etc/etckeeper/etckeeper.conf"];
+  exec {'etckeeper_init once':
+      command => 'etckeeper init',
+      creates => '/etc/.git',
+      require => File['/etc/etckeeper/etckeeper.conf'];
   }
 }
