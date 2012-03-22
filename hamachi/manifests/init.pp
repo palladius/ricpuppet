@@ -39,8 +39,10 @@ class hamachi($hamachi_hostname = $hostname) {
     ensure   => latest,
     provider => dpkg,
     source   => $deb_path,
-    require  => File[$deb_path],
-    # TODO give different source
+    require  => [
+      File[$deb_path],
+      File["$vanilla::basepath/downloadz"],
+    ];
   }
 
   # This should be executed just after installation
