@@ -15,7 +15,7 @@
 
 class vanilla () {
   # Please populate the HISTORY package
-  $version = "0.9.7"
+  $version = "0.9.9"
   $verbose = true
   $basepath = "/opt/riccardo"
   $root_path_addon = "$basepath/bin:$basepath/sbin"
@@ -37,6 +37,7 @@ class vanilla () {
   $vanilla_skeleton_dirs = [
     "$basepath",
     "$basepath/bin",
+    "$basepath/downloadz",
     "$basepath/etc",
     "$basepath/man",
     "$basepath/sbin",

@@ -1,0 +1,1 @@
+# TODO defined type: network(name,password,autojoin=true)
