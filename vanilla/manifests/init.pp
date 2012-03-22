@@ -37,7 +37,7 @@ class vanilla ($machine_description = 'Sorry, no info provided') {
     'physicalprocessorcount',
     'virtual','machine_description',
     'operatingsystem','operatingsystemrelease',
-    'architecture','uniqueid'
+    'architecture','uniqueid','productname'
   ]
   $mandatory_packages = [
     'bash-completion' , # how can u live without it?
