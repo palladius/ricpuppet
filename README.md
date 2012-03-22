@@ -9,14 +9,17 @@ This has the aim of installing modules more for fun than for actual servers
 Only a few of these are 'production', the other are just tests.
 Please bear with me for a few more months ok?
 
+Modules
+-------
+
+    vanilla (works)
+    hamachi (works, tested on an already installed system so far)
+
 TODO
 ====
 
 * Integrate / Investigate: puppet-module . i.e.:
 	puppet-module search iptables
-* MyGicRepo
-
-
 * Integrate with this intriguing page:
 	http://projects.reductivelabs.com/projects/puppet/wiki/Cron_Patterns
 
