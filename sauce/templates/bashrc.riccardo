@@ -3,13 +3,24 @@
 export PATH=$PATH:<%= root_path_addon %>
 alias cdric="cd <%= basepath %>"
 
+######################################################
 # very useful exp. with extropy servers: same hostname but different domain
-alias ps1_long='export PS1="\u@$(hostname -f):\w\\$ "'
-export SAUCE_VERSION='<%= version %>'
-alias sauce_riccardo_version='echo SAUCE VERSION: $SAUCE_VERSION'
-alias sauce_riccardo_history='cat <%= basepath %>/HISTORY'
-alias sb='source ~/.bashrc'
+alias ps1_long_nocolor='export PS1="\u@$(hostname -f):\w\\$ "'
+alias ps1_long_colored='export PS1="\u@\033[1;35m$(hostname -f)\033[0m:\w\\$ "'
 
+######################################################
+# SAUCE stuff
+export SAUCE_VERSION='<%= version %>'
+alias sauce_version='echo SAUCE VERSION: $SAUCE_VERSION'
+alias vanilla_version='echo Try instead: sauce_version'
+alias sauce_history='cat <%= basepath %>/HISTORY'
+alias hostinfo='cat <%= basepath %>/host_info.yml'
+
+# Riccardo practical stuff
+alias vi.bashrc='vim ~/.bashrc'
+alias sb='source ~/.bashrc'
 alias ss='git status'
 
-ps1_long
+hostinfo
+
+ps1_long_colored

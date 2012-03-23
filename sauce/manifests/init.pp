@@ -1,4 +1,4 @@
-# Class: sauce
+# Class: sauce (flavour: 'in bianco')
 #
 # This class configures the dev servers in a standard way common to ALL
 # machines.
@@ -18,8 +18,9 @@ class sauce ($machine_description = 'Sorry, no info provided') {
   $version = '1.0.02'
   $verbose = true
   $basepath = '/opt/riccardo'
-  $root_path_addon = "$basepath/bin:$basepath/sbin"
+  $root_path_addon = "$basepath/bin:$basepath/sbin:/var/lib/gems/1.8/bin/"
   $user_path_addon = "$basepath/bin"
+  $flavour = 'in bianco'
   $history = '
 1.0.02 20120323 Added my favorite rubygems support :)
 1.0.01 20120322 Added bashrc to Riccardo as well
@@ -32,7 +33,7 @@ class sauce ($machine_description = 'Sorry, no info provided') {
 0.9.7  2011xxxx Cant remember, i guess all the DIR infrastructure
 0.9.1  2011???? Added LICENSE,README,.bashrc, Common HEADER'
 
-  # Interesting paramteres collected by facter
+  # Interesting parameters collected by facter
   $facter_fun_facts = [
     'hostname','domain','fqdn','ipaddress',
     'physicalprocessorcount',
