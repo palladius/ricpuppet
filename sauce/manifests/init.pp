@@ -42,15 +42,17 @@ class sauce ($machine_description = 'Sorry, no info provided') {
     'operatingsystem','operatingsystemrelease',
     'architecture','uniqueid','productname'
   ]
-  
+
   # sauce packages
   $mandatory_packages = [
     'bash-completion' ,              # how can u live without it?
-    'gitk',                          # ditto (git is called git-core on 10.04 so maybe this),
+    'gitk',            # ditto (git is called git-core on 10.04 so maybe this)
     'libnotify-bin',                 # notify-send for sending messages.
-    'rubygems',                      # I know, it would be better to have them installed from source but.... hey... this is puppet!
+    # I know, it would be better to have them installed from source but....
+    # hey... this is puppet!
+    'rubygems',
     'links', 'lynx', 'wget',         # For web
-    'libxmpp4r-ruby',                # Jabber library for ubuntu (for my notify scripts to work)
+    'libxmpp4r-ruby',                # Jabber library for my notify scripts
     'ruby-full', 'build-essential',  # Suggested by DHH Ruby Wiki
     'fping','nmap','traceroute',     # Networking basics, wtf! :)
   ]
@@ -82,8 +84,8 @@ class sauce ($machine_description = 'Sorry, no info provided') {
 
   # Ruby gems we want installed
   package { $mandatory_gems:
-    provider => 'gem',
     ensure   => installed,
+    provider => 'gem',
     require  => Package[[rubygems]]
   }
 

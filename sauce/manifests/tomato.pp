@@ -15,7 +15,7 @@
 #   Creates dirs/files as per wiki docs (/opt/riccardo/, ...)
 #
 # Sample Usage:
-#   class { 'sauce':
+#   class { 'sauce::tomato':
 #     machine_description => 'mandatory description for machine',
 #     cluster_description => 'mandatory description from node.pp',
 #   }
