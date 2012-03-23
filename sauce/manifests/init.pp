@@ -44,7 +44,7 @@ class sauce ($machine_description = 'Sorry, no info provided') {
     'architecture','uniqueid','productname'
   ]
 
-  # sauce packages
+  # sauce debian packages
   $mandatory_packages = [
     'bash-completion' ,              # how can u live without it?
     'gitk',            # ditto (git is called git-core on 10.04 so maybe this)
@@ -56,6 +56,9 @@ class sauce ($machine_description = 'Sorry, no info provided') {
     'libxmpp4r-ruby',                # Jabber library for my notify scripts
     'ruby-full', 'build-essential',  # Suggested by DHH Ruby Wiki
     'fping','nmap','traceroute',     # Networking basics, wtf! :)
+    # For some bug on missing LC_TYPE..
+    'locales' ,
+    'language-pack-en',
   ]
 
   $mandatory_gems = [
