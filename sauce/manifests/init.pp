@@ -1,4 +1,4 @@
-# Class: vanilla
+# Class: sauce
 #
 # This class configures the dev servers in a standard way common to ALL
 # machines.
@@ -11,10 +11,10 @@
 #   Creates dirs/files as per wiki docs (/opt/riccardo/, ...)
 #
 # Sample Usage:
-#   class { 'vanilla':
+#   class { 'sauce':
 #     machine_description => 'optional description'
 #   }
-class vanilla ($machine_description = 'Sorry, no info provided') {
+class sauce ($machine_description = 'Sorry, no info provided') {
   $version = '1.0.02'
   $verbose = true
   $basepath = '/opt/riccardo'
@@ -27,7 +27,7 @@ class vanilla ($machine_description = 'Sorry, no info provided') {
 0.9.12 20120322 Machine Description added!
 0.9.11 20120322 History made variable, merged programmatically with old branch
 0.9.10 20120322 Adding mandatory packages
-0.9.9  20120322 Adding $vanilladir/downloadz
+0.9.9  20120322 Adding $saucedir/downloadz
 0.9.8  20120321 Adding host history
 0.9.7  2011xxxx Cant remember, i guess all the DIR infrastructure
 0.9.1  2011???? Added LICENSE,README,.bashrc, Common HEADER'
@@ -41,7 +41,7 @@ class vanilla ($machine_description = 'Sorry, no info provided') {
     'architecture','uniqueid','productname'
   ]
   
-  # vanilla packages
+  # sauce packages
   $mandatory_packages = [
     'bash-completion' , # how can u live without it?
     'gitk',             # ditto (git is called git-core on 10.04 so maybe this),
@@ -54,7 +54,7 @@ class vanilla ($machine_description = 'Sorry, no info provided') {
   ]
 
 
-  $vanilla_template_header = "\
+  $sauce_template_header = "\
 #############################################################################
 # !!!BEWARE!!!
 #############################################################################
@@ -89,7 +89,7 @@ class vanilla ($machine_description = 'Sorry, no info provided') {
 
   # If you put them in order, puppet will do the correct thing
   # and won't need the dependencies ;)
-  $vanilla_skeleton_dirs = [
+  $sauce_skeleton_dirs = [
     $basepath,
     "$basepath/bin",
     "$basepath/downloadz",
@@ -101,7 +101,7 @@ class vanilla ($machine_description = 'Sorry, no info provided') {
     "$basepath/var/log",
   ]
 
-  file { $vanilla_skeleton_dirs:
+  file { $sauce_skeleton_dirs:
     ensure => 'directory',
     owner  => 'root',
     #group => "riccardo",
@@ -116,7 +116,7 @@ class vanilla ($machine_description = 'Sorry, no info provided') {
     #   $DATE Added HISTORY FILE and PUPPETIZED HOST
     #   HOSTNAME: hostname -f
     #   DISTRO:   lsb_release -a
-    #content => template('vanilla/README'),
+    #content => template('sauce/README'),
     #require => File[$basepath],
   }
 
@@ -136,37 +136,37 @@ class vanilla ($machine_description = 'Sorry, no info provided') {
   ## TEMPLATES
   file { "$basepath/LICENSE":
     ensure  => present,
-    content => template('vanilla/LICENSE'),
+    content => template('sauce/LICENSE'),
     require => File[$basepath],
   }
 
   file { "$basepath/README":
     ensure  => present,
-    content => template('vanilla/README'),
+    content => template('sauce/README'),
     require => File[$basepath],
   }
 
   file { "$basepath/TODO":
     ensure  => present,
-    content => template('vanilla/TODO'),
+    content => template('sauce/TODO'),
     require => File[$basepath],
   }
 
   file { "$basepath/HISTORY":
     ensure  => present,
-    content => template('vanilla/HISTORY'),
+    content => template('sauce/HISTORY'),
     require => File[$basepath],
   }
 
   file { "$basepath/HOSTINFO.yml":
     ensure  => present,
-    content => template('vanilla/HOSTINFO.yml'),
+    content => template('sauce/HOSTINFO.yml'),
     require => File[$basepath],
   }
 
   file { '/root/.bashrc.riccardo':
     ensure  => present,
-    content => template('vanilla/bashrc.riccardo'),
+    content => template('sauce/bashrc.riccardo'),
     require => File[$basepath],
   }
   # TODO refactor in a defined type
@@ -174,7 +174,7 @@ class vanilla ($machine_description = 'Sorry, no info provided') {
     ensure  => present,
     owner   => 'riccardo',
     group   => 'riccardo',
-    content => template('vanilla/bashrc.riccardo'),
+    content => template('sauce/bashrc.riccardo'),
     require => File[$basepath],
   }
 
@@ -189,7 +189,7 @@ then source /root/.bashrc.riccardo ; fi" \
   # Include the inject file...
   file { "$basepath/bashrc.inject":
     ensure  => present,
-    content => template('vanilla/bashrc.inject'),
+    content => template('sauce/bashrc.inject'),
     require => File[$basepath];
   }
 

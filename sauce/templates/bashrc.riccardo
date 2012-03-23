@@ -1,13 +1,13 @@
-<%= vanilla_template_header %>
+<%= sauce_template_header %>
 
 export PATH=$PATH:<%= root_path_addon %>
 alias cdric="cd <%= basepath %>"
 
 # very useful exp. with extropy servers: same hostname but different domain
 alias ps1_long='export PS1="\u@$(hostname -f):\w\\$ "'
-export VANILLA_VERSION='<%= version %>'
-alias vanilla_riccardo_version='echo VANILLA VERSION: $VANILLA_VERSION'
-alias vanilla_riccardo_history='cat <%= basepath %>/HISTORY'
+export SAUCE_VERSION='<%= version %>'
+alias sauce_riccardo_version='echo SAUCE VERSION: $SAUCE_VERSION'
+alias sauce_riccardo_history='cat <%= basepath %>/HISTORY'
 alias sb='source ~/.bashrc'
 
 alias ss='git status'

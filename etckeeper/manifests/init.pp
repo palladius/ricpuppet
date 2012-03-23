@@ -17,7 +17,7 @@
 #
 
 class etckeeper {
-  include vanilla
+  include sauce
 
   # Used in the template
   case $::operatingsystem {

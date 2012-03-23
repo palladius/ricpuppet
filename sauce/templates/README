@@ -1,4 +1,4 @@
-<%= vanilla_template_header %>
+<%= sauce_template_header %>
 
 Welcome to '<%= basepath %>'. This directory
 includes ALL Riccardo-relevant software. Most of this is

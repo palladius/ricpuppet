@@ -2,7 +2,7 @@
 Vanilla
 =======
 
-This is the vanilla package.
+This is the sauce package.
 *All* Dell machines, whether DEV or other, should implement this class.
 
 

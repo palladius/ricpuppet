@@ -15,5 +15,5 @@ puppet
 ric-zookeeper      OK lint,tests
 ripdublin
 user
-vanilla      		   OK lint,tests,works
+sauce      		   OK lint,tests,works
 virtualbox

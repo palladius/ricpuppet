@@ -12,7 +12,7 @@ Please bear with me for a few more months ok?
 Modules
 -------
 
-    vanilla (works)
+    sauce (works)
     hamachi (works, tested on an already installed system so far)
 
 TODO

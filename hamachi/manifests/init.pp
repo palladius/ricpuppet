@@ -15,13 +15,13 @@
 #   include hamachi
 #
 class hamachi($hamachi_hostname = $hostname) {
-  require vanilla
+  require sauce
 
   $hamachiver = '0.9.1'
   # architecture: i386 or what...
   $deb_filename = "logmein-hamachi_2.1.0.17-1_$::architecture.deb"
   #$deb_filename = 'logmein-hamachi_2.1.0.17-1_i386.deb' # this works
-  $deb_path= "$vanilla::basepath/downloadz/$deb_filename"
+  $deb_path= "$sauce::basepath/downloadz/$deb_filename"
 
   # TODO check architecture
   # 1. Copies the deb file
@@ -41,7 +41,7 @@ class hamachi($hamachi_hostname = $hostname) {
     source   => $deb_path,
     require  => [
       File[$deb_path],
-      File["$vanilla::basepath/downloadz"],
+      File["$sauce::basepath/downloadz"],
     ];
   }
 
@@ -50,11 +50,11 @@ class hamachi($hamachi_hostname = $hostname) {
   # add the version to make it recheck this script :)
   exec {"fix hamachi install once ver $hamachiver":
       command => "/usr/bin/apt-get -f install -y && touch \
-  '$vanilla::basepath/downloadz/puppet-hamachi.v$hamachiver-fixed.touch'",
+  '$sauce::basepath/downloadz/puppet-hamachi.v$hamachiver-fixed.touch'",
       creates =>
-        "$vanilla::basepath/downloadz/puppet-hamachi.v$hamachiver-fixed.touch",
+        "$sauce::basepath/downloadz/puppet-hamachi.v$hamachiver-fixed.touch",
       require => [Package['logmein-hamachi'],
-        File["$vanilla::basepath/downloadz"]];
+        File["$sauce::basepath/downloadz"]];
   }
 
   service {'logmein-hamachi':
@@ -64,9 +64,9 @@ class hamachi($hamachi_hostname = $hostname) {
 
   # TODO rename to username
   # "hamachi set-nick $hamachi_hostname"
-  file { "$vanilla::basepath/downloadz/puppet-hamachi.TODO.hostname":
+  file { "$sauce::basepath/downloadz/puppet-hamachi.TODO.hostname":
       ensure  => present,
       content => "#TODO execute this once:\nhamachi set-nick $hamachi_hostname",
-      require => File["$vanilla::basepath/downloadz"];
+      require => File["$sauce::basepath/downloadz"];
   }
 }

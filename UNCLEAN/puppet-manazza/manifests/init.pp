@@ -16,7 +16,7 @@ class manazza ( $user_name ) {
   
   # the extropy base class setup ssh... amongst other goodness  
   # include base
-  # include vanilla # maybe better?
+  # include sauce # maybe better?
 
   manazza::user_with_homedir_and_sshkeys {'testpuppetric1': ensure => 'present'; }
   manazza::user_with_homedir_and_sshkeys {'testpuppetric2': ensure => 'present'; }
