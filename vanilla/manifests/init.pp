@@ -15,12 +15,13 @@
 #     machine_description => 'optional description'
 #   }
 class vanilla ($machine_description = 'Sorry, no info provided') {
-  $version = '1.0.01'
+  $version = '1.0.02'
   $verbose = true
   $basepath = '/opt/riccardo'
   $root_path_addon = "$basepath/bin:$basepath/sbin"
   $user_path_addon = "$basepath/bin"
   $history = '
+1.0.02 20120323 Added my favorite rubygems support :)
 1.0.01 20120322 Added bashrc to Riccardo as well
 0.9.12 20120322 Added hostinfo in YAML representation :)
 0.9.12 20120322 Machine Description added!
@@ -71,13 +72,12 @@ class vanilla ($machine_description = 'Sorry, no info provided') {
   package {$mandatory_packages:
     ensure => 'installed'
   }
-  package { 'rubygems': ensure => installed }
 
   # Ruby gems we want installed
   package { $mandatory_gems:
     provider => 'gem',
-    ensure => installed,
-    require => Package[[rubygems]]
+    ensure   => installed,
+    require  => Package[[rubygems]]
   }
 
   Exec { path => [
