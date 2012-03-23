@@ -21,6 +21,7 @@ class sauce ($machine_description = 'Sorry, no info provided') {
   $root_path_addon = "$basepath/bin:$basepath/sbin:/var/lib/gems/1.8/bin/"
   $user_path_addon = "$basepath/bin"
   $flavour = 'in bianco'
+  $parsley_dir = "$basepath/parsley"
   $history = '
 1.0.03 20120323 Added A LOT of packages and amenities
 1.0.02 20120323 Added my favorite rubygems support :)
@@ -63,6 +64,11 @@ class sauce ($machine_description = 'Sorry, no info provided') {
     #sakura             # TODO implement
   ]
 
+  # TODO use vcsrepo
+  $github_repos = [
+    'palladius/sakura',
+  ]
+
   $sauce_template_header = "\
 #############################################################################
 # !!!BEWARE!!!
@@ -94,6 +100,7 @@ class sauce ($machine_description = 'Sorry, no info provided') {
     '/usr/sbin',
     "$basepath/bin",
     "$basepath/sbin",
+    "$basepath/parsley",
   ] }
 
   # If you put them in order, puppet will do the correct thing
