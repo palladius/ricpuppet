@@ -35,4 +35,7 @@ class puppet ($development_machine = false) {
     }
   }
 
+  # TODO ensure packages puppet and facter are NOT installed by ubuntu (we want
+  # the rubygems)
+
 } #/Class puppet
