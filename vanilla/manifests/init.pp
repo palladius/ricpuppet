@@ -39,9 +39,17 @@ class vanilla ($machine_description = 'Sorry, no info provided') {
     'operatingsystem','operatingsystemrelease',
     'architecture','uniqueid','productname'
   ]
+  
+  # vanilla packages
   $mandatory_packages = [
     'bash-completion' , # how can u live without it?
-    'gitk',             # ditto (git is called git-core on 10.04 so maybe this)
+    'gitk',             # ditto (git is called git-core on 10.04 so maybe this),
+    'libnotify-bin',    # notify-send for sending messages.
+    'rubygems',         # I know, it would be better to have them installed from source but.... hey... this is puppet!
+  ]
+
+  $mandatory_gems = [
+    'xmpp4r-simple' ,   # Jabber notifications
   ]
 
 
@@ -63,7 +71,14 @@ class vanilla ($machine_description = 'Sorry, no info provided') {
   package {$mandatory_packages:
     ensure => 'installed'
   }
-  #TODO require etckeeper module as well
+  package { 'rubygems': ensure => installed }
+
+  # Ruby gems we want installed
+  package { $mandatory_gems:
+    provider => 'gem',
+    ensure => installed,
+    require => Package[[rubygems]]
+  }
 
   Exec { path => [
     '/usr/bin',
