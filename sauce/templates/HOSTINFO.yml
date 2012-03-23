@@ -2,6 +2,10 @@
 # Extracted with facter, conceptually
 host_info:
 <% facter_fun_facts.each do |fact| -%>
-  <%= fact%>: <%= scope.lookupvar('sauce::' + fact.to_s ) %>
+  <%= fact %>: <%= scope.lookupvar('sauce::' + fact.to_s ) %>
 <% end %>
+Sauce stuff:
+  Flavour
+  Installed Packages: <%= mandatory_packages.sort.join(', ') %>
+  Installed Ruby Gems: <%= mandatory_gems.sort.join(', ') %>
 ---

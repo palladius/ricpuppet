@@ -15,13 +15,14 @@
 #     machine_description => 'optional description'
 #   }
 class sauce ($machine_description = 'Sorry, no info provided') {
-  $version = '1.0.02'
+  $version = '1.0.03'
   $verbose = true
   $basepath = '/opt/riccardo'
   $root_path_addon = "$basepath/bin:$basepath/sbin:/var/lib/gems/1.8/bin/"
   $user_path_addon = "$basepath/bin"
   $flavour = 'in bianco'
   $history = '
+1.0.03 20120323 Added A LOT of packages and amenities
 1.0.02 20120323 Added my favorite rubygems support :)
 1.0.01 20120322 Added bashrc to Riccardo as well
 0.9.12 20120322 Added hostinfo in YAML representation :)
@@ -44,16 +45,21 @@ class sauce ($machine_description = 'Sorry, no info provided') {
   
   # sauce packages
   $mandatory_packages = [
-    'bash-completion' , # how can u live without it?
-    'gitk',             # ditto (git is called git-core on 10.04 so maybe this),
-    'libnotify-bin',    # notify-send for sending messages.
-    'rubygems',         # I know, it would be better to have them installed from source but.... hey... this is puppet!
+    'bash-completion' ,              # how can u live without it?
+    'gitk',                          # ditto (git is called git-core on 10.04 so maybe this),
+    'libnotify-bin',                 # notify-send for sending messages.
+    'rubygems',                      # I know, it would be better to have them installed from source but.... hey... this is puppet!
+    'links', 'lynx', 'wget',         # For web
+    'libxmpp4r-ruby',                # Jabber library for ubuntu (for my notify scripts to work)
+    'ruby-full', 'build-essential',  # Suggested by DHH Ruby Wiki
+    'fping','nmap','traceroute',     # Networking basics, wtf! :)
   ]
 
   $mandatory_gems = [
     'xmpp4r-simple' ,   # Jabber notifications
+    'ric',              # Self gratification :)
+    #sakura             # TODO implement
   ]
-
 
   $sauce_template_header = "\
 #############################################################################

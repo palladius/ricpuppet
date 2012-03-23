@@ -1,12 +1,13 @@
 <%= sauce_template_header %>
 
 export PATH=$PATH:<%= root_path_addon %>
-alias cdric="cd <%= basepath %>"
 
 ######################################################
 # very useful exp. with extropy servers: same hostname but different domain
+# Uses LONG hostname (-f)
 alias ps1_long_nocolor='export PS1="\u@$(hostname -f):\w\\$ "'
 alias ps1_long_colored='export PS1="\u@\033[1;35m$(hostname -f)\033[0m:\w\\$ "'
+alias ps1_short='export PS1="\u@\h:\w\$ "'
 
 ######################################################
 # SAUCE stuff
@@ -20,6 +21,7 @@ alias hostinfo='cat <%= basepath %>/host_info.yml'
 alias vi.bashrc='vim ~/.bashrc'
 alias sb='source ~/.bashrc'
 alias ss='git status'
+alias cdric="cd <%= basepath %>"
 
 hostinfo
 
