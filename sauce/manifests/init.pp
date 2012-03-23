@@ -86,7 +86,7 @@ class sauce ($machine_description = 'Sorry, no info provided') {
   package { $mandatory_gems:
     ensure   => installed,
     provider => 'gem',
-    require  => Package[[rubygems]]
+    require  => Package['rubygems']
   }
 
   Exec { path => [
