@@ -18,7 +18,7 @@
 #     machine_description => 'optional description'
 #   }
 class sauce ($machine_description = 'Sorry, no info provided') {
-  $version = '1.1.01'
+  $version = '1.1.02'
   $verbose = true
   $basepath = '/opt/riccardo'
   $basepath_parsley_dir = "$basepath/parsley"
@@ -27,6 +27,7 @@ class sauce ($machine_description = 'Sorry, no info provided') {
   $user_path_addon = "$basepath/bin"
   $flavour = 'in bianco'
   $history = '
+1.1.02 20120324 bugfixes
 1.1.01 20120324 Adds root dir. Adds Cron to autoupdate itself!!! (my dream)
 1.0.04 20120324 Patched to make it work on a Mac :)
 1.0.03 20120323 Added A LOT of packages and amenities
@@ -261,7 +262,7 @@ then source $roothome/.bashrc.riccardo ; fi\" \
 
   cron { "hourly download for RUMP from Riccardo github and execute":  
       ensure  => present,
-      command => "cd ~/git/puppet-rump && git pull origin master && rump go 1>/dev/null",
+      command => "cd ~/git/puppet-rump && git pull origin master && rump go && touch $basepath/cron-rump-last-update.touch",
       user    => 'root',
       environment => ["PATH=$normal_path:$root_path_addon","MAILTO=$cronemail"], # this is from site.pp
       minute  => 51,
