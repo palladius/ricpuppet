@@ -15,7 +15,7 @@
 #     machine_description => 'optional description'
 #   }
 class sauce ($machine_description = 'Sorry, no info provided') {
-  $version = '1.0.03'
+  $version = '1.0.04'
   $verbose = true
   $basepath = '/opt/riccardo'
   $root_path_addon = "$basepath/bin:$basepath/sbin:/var/lib/gems/1.8/bin/"
@@ -23,6 +23,7 @@ class sauce ($machine_description = 'Sorry, no info provided') {
   $flavour = 'in bianco'
   $parsley_dir = "$basepath/parsley"
   $history = '
+1.0.04 20120324 Patched to make it work on a Mac :)
 1.0.03 20120323 Added A LOT of packages and amenities
 1.0.02 20120323 Added my favorite rubygems support :)
 1.0.01 20120322 Added bashrc to Riccardo as well
