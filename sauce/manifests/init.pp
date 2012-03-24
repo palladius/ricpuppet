@@ -23,6 +23,7 @@ class sauce ($machine_description = 'Sorry, no info provided') {
   $basepath = '/opt/riccardo'
   $basepath_parsley_dir = "$basepath/parsley"
   $root_path_addon = "$basepath/bin:$basepath/sbin:/var/lib/gems/1.8/bin/"
+  $normal_path     = '/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/sbin:/usr/local/bin'
   $user_path_addon = "$basepath/bin"
   $flavour = 'in bianco'
   $history = '
@@ -219,7 +220,7 @@ class sauce ($machine_description = 'Sorry, no info provided') {
 then source $roothome/.bashrc.riccardo ; fi\" \
 >> $roothome/.bashrc":
     unless  => "grep \"then source $roothome/.bashrc.riccardo\" $roothome/.bashrc",
-    path    => '/bin';
+    path    => $normal_path;
   }
 
   # Include the inject file...
@@ -233,7 +234,7 @@ then source $roothome/.bashrc.riccardo ; fi\" \
   # TODO make it modular for user XXXX'
   exec {"cat '$basepath/bashrc.inject' >> ~riccardo/.bashrc":
     unless  => 'grep "bashrc.inject START" ~riccardo/.bashrc',
-    path    => '/bin',
+    path    => $normal_path,
     require => File["$basepath/bashrc.inject"];
   }
 
@@ -262,6 +263,7 @@ then source $roothome/.bashrc.riccardo ; fi\" \
       ensure  => present,
       command => "cd ~/git/puppet-rump && git pull origin master && rump go 1>/dev/null",
       user    => 'root',
+      environment => ["PATH=$normal_path:$root_path_addon","MAILTO=$cronemail"], # this is from site.pp
       minute  => 51,
   }
   # copied from http://projects.puppetlabs.com/projects/1/wiki/Cron_Patterns
