@@ -227,11 +227,13 @@ then source /root/.bashrc.riccardo ; fi" \
     require => File["$basepath/var/log"],
   }
 
-  # For automated backup pulls
-  user { 'ricbackup':
-    ensure     => present,
-    password   => 'YouWillNeverGuessThis21387frebjhq43',
-    managehome => true,
+  unless($operatingsystem = 'Darwin') {
+    # For automated backup pulls, doesnt work on Mac
+    user { 'ricbackup': 
+      ensure     => present,
+      password   => 'YouWillNeverGuessThis21387frebjhq43',
+      managehome => true,  # gives error on Mac
+    }
   }
 
 }

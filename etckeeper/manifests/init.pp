@@ -29,7 +29,7 @@ class etckeeper {
       $highlevel_package_manager = 'apt'
       $lowlevel_package_manager  = 'dpkg'
     }
-    default: {fail("Etckeeper doesn't know how to handle ${::operatingsystem}")}
+    default: {fail("Etckeeper doesn't know how to handle '${::operatingsystem}' OS!")}
   }
 
   package { 'etckeeper':

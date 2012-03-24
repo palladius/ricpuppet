@@ -1,4 +1,4 @@
-# Definition: etckeeper
+# Definition: hamachi
 #
 # This class installs logmein-hamachi on Debian systems.
 #
@@ -17,7 +17,7 @@
 class hamachi($hamachi_hostname = $hostname) {
   require sauce
 
-  $hamachiver = '0.9.1'
+  $hamachiver = '0.9.2'
   # architecture: i386 or what...
   $deb_filename = "logmein-hamachi_2.1.0.17-1_$::architecture.deb"
   #$deb_filename = 'logmein-hamachi_2.1.0.17-1_i386.deb' # this works
