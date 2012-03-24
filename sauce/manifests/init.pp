@@ -18,10 +18,10 @@ class sauce ($machine_description = 'Sorry, no info provided') {
   $version = '1.0.04'
   $verbose = true
   $basepath = '/opt/riccardo'
+  $basepath_parsley_dir = "$basepath/parsley"
   $root_path_addon = "$basepath/bin:$basepath/sbin:/var/lib/gems/1.8/bin/"
   $user_path_addon = "$basepath/bin"
   $flavour = 'in bianco'
-  $parsley_dir = "$basepath/parsley"
   $history = '
 1.0.04 20120324 Patched to make it work on a Mac :)
 1.0.03 20120323 Added A LOT of packages and amenities
@@ -104,7 +104,6 @@ class sauce ($machine_description = 'Sorry, no info provided') {
     '/usr/sbin',
     "$basepath/bin",
     "$basepath/sbin",
-    "$basepath/parsley",
   ] }
 
   # If you put them in order, puppet will do the correct thing
@@ -116,6 +115,7 @@ class sauce ($machine_description = 'Sorry, no info provided') {
     "$basepath/etc",
     "$basepath/man",
     "$basepath/sbin",
+    "$basepath_parsley_dir",
     "$basepath/tmp",
     "$basepath/var",
     "$basepath/var/log",
@@ -228,13 +228,11 @@ then source /root/.bashrc.riccardo ; fi" \
     require => File["$basepath/var/log"],
   }
 
-  unless($operatingsystem = 'Darwin') {
     # For automated backup pulls, doesnt work on Mac
     user { 'ricbackup': 
       ensure     => present,
       password   => 'YouWillNeverGuessThis21387frebjhq43',
-      managehome => true,  # gives error on Mac
+      #managehome => true,  # gives error on Mac
     }
-  }
 
 }

@@ -3,10 +3,10 @@ define sauce::parsley ($content, $diary = 'default') {
   include sauce
   # Do all the things you'd normally do, using $type_server as needed
   
-  file {"$parsley_dir/${diary}::${name}.txt":
+  file {"${sauce::basepath_parsley_dir}/${diary}::${name}.txt":
     ensure  => file,
     content => "== $diary::$name ==\n\n$content\n",
-    require => File[$sauce::parsley_dir],
+    require => File[$sauce::basepath_parsley_dir],
   }
 
 }
