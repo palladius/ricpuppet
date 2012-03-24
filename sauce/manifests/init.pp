@@ -81,6 +81,18 @@ class sauce ($machine_description = 'Sorry, no info provided') {
 # Change at your own risk!
 #############################################################################"
 
+  # Used in the template
+  # TODO $roothome = Facter['richome']
+  case $::operatingsystem {
+    Darwin: {
+      $roothome = '/var/root'  # Mac has different root
+    }
+    default: {
+      #fail("sauce doesn't know what ROOTHOME you have for '${::operatingsystem}' OS! I guess /root/?")
+      $roothome = '/root'
+    }
+  }
+
   #if (defined('machine_description')) {
   #  $machine_description = "Dan is right: $machine_description"
   #} else {
@@ -129,7 +141,7 @@ class sauce ($machine_description = 'Sorry, no info provided') {
     # otherwise normal users can't get in
   }
 
-  file { '/root/HISTORY_SYSADMIN':
+  file { "$roothome/HISTORY_SYSADMIN":
     ensure => present
     # Write if not exists the following:
     #   # Please keep this up to date!
@@ -184,7 +196,7 @@ class sauce ($machine_description = 'Sorry, no info provided') {
     require => File[$basepath],
   }
 
-  file { '/root/.bashrc.riccardo':
+  file { "$roothome/.bashrc.riccardo":
     ensure  => present,
     content => template('sauce/bashrc.riccardo'),
     require => File[$basepath],
@@ -199,10 +211,10 @@ class sauce ($machine_description = 'Sorry, no info provided') {
   }
 
   # Mabnual exec (inelegant)
-  exec {'echo "if [ -f /root/.bashrc.riccardo ] ; \
-then source /root/.bashrc.riccardo ; fi" \
->> /root/.bashrc':
-    unless  => 'grep "then source /root/.bashrc.riccardo" /root/.bashrc',
+  exec {"echo \"if [ -f $roothome/.bashrc.riccardo ] ; \
+then source $roothome/.bashrc.riccardo ; fi\" \
+>> $roothome/.bashrc":
+    unless  => "grep \"then source $roothome/.bashrc.riccardo\" $roothome/.bashrc",
     path    => '/bin';
   }
 
@@ -236,7 +248,11 @@ then source /root/.bashrc.riccardo ; fi" \
       #managehome => true,  # gives error on Mac
     }
 
-  if ($operativesystem = 'Darwin') {
-	  # symlink  'root' to '/var/root' (or whichever home it is) 
-}
+  if (!defined($richome)) {
+    fail("Facter shouold have defined \$richome for me in sauce! richome='$richome'")
+  }
+
+  cron { "download automatically RUMP from Riccardo github and execute":
+    "cd ~/git/puppet-rump && git pull origin master && rump go"
+  }
 }

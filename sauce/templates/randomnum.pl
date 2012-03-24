@@ -1,4 +1,7 @@
 #!/usr/bin/perl
+# Copied by puppetlabs:
+# http://projects.puppetlabs.com/projects/1/wiki/Cron_Patterns
+
 #### /etc/puppet/modules/puppet/bin/randomnum.pl
 use strict;
 umask 066;
