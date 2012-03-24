@@ -1,6 +1,6 @@
 # Definition: etckeeper
 #
-# This class installs logmein-hamachi on Debian systems
+# This class installs logmein-hamachi on Debian systems.
 #
 # Parameters:
 # - None (possibly a hostname)
@@ -22,6 +22,8 @@ class hamachi($hamachi_hostname = $hostname) {
   $deb_filename = "logmein-hamachi_2.1.0.17-1_$::architecture.deb"
   #$deb_filename = 'logmein-hamachi_2.1.0.17-1_i386.deb' # this works
   $deb_path= "$sauce::basepath/downloadz/$deb_filename"
+
+  # if ($operatingsystem = 'Darwin') # installs on Mac
 
   # TODO check architecture
   # 1. Copies the deb file

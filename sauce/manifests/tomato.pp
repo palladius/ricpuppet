@@ -20,6 +20,17 @@
 #     cluster_description => 'mandatory description from node.pp',
 #   }
 class sauce::tomato ($machine_description, $cluster_description) {
+  include sauce
+
+  $tomato_debian_packages = [
+    'python-pip',                  # equivalent of gems for python
+  ]
+
+  $python_pips = [
+    'blueprint',          # amazing blueprint package
+  ]
+
+  #TODO pip install $python_pips
 
   file { "$sauce::basepath/MACHINE_DESCRIPTION.tomato":
     ensure  => present,
