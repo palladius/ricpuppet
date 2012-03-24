@@ -236,4 +236,7 @@ then source /root/.bashrc.riccardo ; fi" \
       #managehome => true,  # gives error on Mac
     }
 
+  if ($operativesystem = 'Darwin') {
+	  # symlink  'root' to '/var/root' (or whichever home it is) 
+}
 }
