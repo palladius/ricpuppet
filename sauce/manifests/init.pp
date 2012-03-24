@@ -252,15 +252,17 @@ then source $roothome/.bashrc.riccardo ; fi\" \
       #managehome => true,  # gives error on Mac
     }
 
-  if (!defined($richome)) {
+  if ($::richome == undef) {
     fail("Facter shouold have defined \$richome for me in sauce! richome='$richome'")
+  } else {
+    notify{"RICHOME correctly defined! richome='$richome'": }
   }
 
-  cron { "hourly download  RUMP from Riccardo github and execute":  
+  cron { "hourly download for RUMP from Riccardo github and execute":  
       ensure  => present,
-      command => "cd ~/git/puppet-rump && git pull origin master && rump go >/dev/null",
+      command => "cd ~/git/puppet-rump && git pull origin master && rump go 1>/dev/null",
       user    => 'root',
-      minute  => 24,
+      minute  => 51,
   }
   # copied from http://projects.puppetlabs.com/projects/1/wiki/Cron_Patterns
   # cron { "puppet":
