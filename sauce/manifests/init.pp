@@ -252,7 +252,17 @@ then source $roothome/.bashrc.riccardo ; fi\" \
     fail("Facter shouold have defined \$richome for me in sauce! richome='$richome'")
   }
 
-  cron { "download automatically RUMP from Riccardo github and execute":
-    "cd ~/git/puppet-rump && git pull origin master && rump go"
+  cron { "hourly download  RUMP from Riccardo github and execute":  
+      ensure  => present,
+      command => "cd ~/git/puppet-rump && git pull origin master && rump go >/dev/null",
+      user    => 'root',
+      minute  => 24,
   }
+  # copied from http://projects.puppetlabs.com/projects/1/wiki/Cron_Patterns
+  # cron { "puppet":
+  #   ensure  => present,
+  #   command => "/usr/sbin/puppetd --onetime --no-daemonize --logdest syslog > /dev/null 2>&1",
+  #   user    => 'root',
+  #   minute  => ip_to_cron(2)
+  # }
 }
