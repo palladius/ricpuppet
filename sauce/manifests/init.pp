@@ -1,7 +1,7 @@
 # Class: sauce (flavour: 'in bianco')
 #
 # This class configures the dev servers in a standard way common to ALL
-# machines.
+# machines. 
 #
 # Parameters:
 #   None at the moment
@@ -9,13 +9,16 @@
 # Actions:
 #   ensure that the machine has an agreed directory structure.
 #   Creates dirs/files as per wiki docs (/opt/riccardo/, ...)
+#   Defins important dirs like:
+#   - $roothome (HOME of root, usually /root but not on Mac)
+#   - $basepath (basedir for all my stuff...)
 #
 # Sample Usage:
 #   class { 'sauce':
 #     machine_description => 'optional description'
 #   }
 class sauce ($machine_description = 'Sorry, no info provided') {
-  $version = '1.0.04'
+  $version = '1.1.01'
   $verbose = true
   $basepath = '/opt/riccardo'
   $basepath_parsley_dir = "$basepath/parsley"
@@ -23,6 +26,7 @@ class sauce ($machine_description = 'Sorry, no info provided') {
   $user_path_addon = "$basepath/bin"
   $flavour = 'in bianco'
   $history = '
+1.1.01 20120324 Adds root dir. Adds Cron to autoupdate itself!!! (my dream)
 1.0.04 20120324 Patched to make it work on a Mac :)
 1.0.03 20120323 Added A LOT of packages and amenities
 1.0.02 20120323 Added my favorite rubygems support :)
