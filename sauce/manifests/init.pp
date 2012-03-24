@@ -228,6 +228,7 @@ then source /root/.bashrc.riccardo ; fi" \
     require => File["$basepath/var/log"],
   }
 
+  #TODO If mac, DONT managehome, else DO :)
     # For automated backup pulls, doesnt work on Mac
     user { 'ricbackup': 
       ensure     => present,
