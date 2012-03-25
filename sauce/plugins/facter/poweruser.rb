@@ -34,12 +34,13 @@ end
 # end
 
 Facter.add(:poweruser_group2) do
-  username = Facter.value('poweruser_name')
+  username = Facter.value('poweruser_name') rescue $dflt_poweruser_name
+  username ||= $dflt_poweruser_name
   os = Facter.value('operatingsystem')
     case os
       when "RedHat", "CentOS", "SuSE", "Fedora"
         system "ls -al /home/#{username}/.bashrc | awk '{print $4}'"
-      when "Debian", "Ubuntu"
+      when "Debian", 'Ubuntu'
         username # in ubuntu its the same!
       when "Darwin"
         'staff' # 
@@ -51,7 +52,8 @@ end
 Facter.add(:poweruser_home) do
     setcode do
       # there must be a better way
-      File.expand_path("~" + Facter.value(:poweruser_name) )
+      # so it works but its debuggable
+      File.expand_path("~" + Facter.value(:poweruser_name) ) || "/home/#{$dflt_poweruser_name}//////"
     end
 end
 
