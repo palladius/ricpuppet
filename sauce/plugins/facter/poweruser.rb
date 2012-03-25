@@ -33,7 +33,7 @@ end
 #   end
 # end
 
-Facter.add(:poweruser_group2) do
+Facter.add('poweruser_group2') do
   username = Facter.value('poweruser_name') rescue $dflt_poweruser_name
   username ||= $dflt_poweruser_name
   os = Facter.value('operatingsystem')
@@ -46,6 +46,18 @@ Facter.add(:poweruser_group2) do
         'staff' # 
       else
     end
+end
+
+Facter.add('poweruser_group3') do
+ setcode do
+  return 'boh'
+    # case Facter.value('operatingsystem')
+    #   when "Darwin"
+    #     'staff'
+    #   else
+    #     'riccardo_else'
+    # end
+ end
 end
 
 # HOME of poweruser

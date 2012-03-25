@@ -18,7 +18,7 @@
 #     machine_description => 'optional description'
 #   }
 class sauce ($machine_description = 'Sorry, no info provided') {
-  $version = '1.2.02'
+  $version = '1.2.02b'
   $verbose = true
   $basepath = '/opt/riccardo'
   $basepath_parsley_dir = "$basepath/parsley"
@@ -59,7 +59,8 @@ class sauce ($machine_description = 'Sorry, no info provided') {
   # Facts defined by me
   $facter_custom_facts = [
     'roothome',
-    'poweruser_group', 'poweruser_name', 'poweruser_home', 'poweruser_exists', 'poweruser_email', 'poweruser_group2',
+    'poweruser_group', 'poweruser_name', 'poweruser_home', 'poweruser_exists', 'poweruser_email', 
+      'poweruser_group2', 'poweruser_group3',
     'nmap_installed', 'whoami', # just for testing
   ]
 
