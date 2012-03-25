@@ -18,7 +18,7 @@
 #     machine_description => 'optional description'
 #   }
 class sauce ($machine_description = 'Sorry, no info provided') {
-  $version = '1.1.04'
+  $version = '1.2.01'
   $verbose = true
   $basepath = '/opt/riccardo'
   $basepath_parsley_dir = "$basepath/parsley"
@@ -27,6 +27,7 @@ class sauce ($machine_description = 'Sorry, no info provided') {
   $user_path_addon = "$basepath/bin"
   $flavour = 'in bianco'
   $history = '
+1.2.01 20120325 cron also updates submodules.. (should..)
 1.1.04 20120325 Adding apache2, better facter and Mac support (wow!)
 1.1.03 20120325 Adding sendmail. Using "roothome" from facter
 1.1.02 20120324 bugfixes
