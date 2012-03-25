@@ -9,7 +9,7 @@ $dflt_poweruser_name = 'riccardo' # on my CYGWIN im 'riccardo_carlesso'
 # http://docs.puppetlabs.com/guides/custom_facts.html
 Facter.add(:poweruser_group) do
   has_weight 100 # high
-  return File.stat(Facter.value(:poweruser_home)).gid
+  return File.stat(Facter.value(:poweruser_home)).gid # rescue Facter.value(:poweruser_name)
   sample_file = File.expand_path(Facter.value(:poweruser_home) + "/.bashrc")
   setcode do
     if File.exist?(sample_file)
@@ -29,8 +29,22 @@ end
 Facter.add(:poweruser_group) do
   has_weight 50 # Low
   setcode do
-    'staff'
+    :staff
   end
+end
+
+Facter.add(:poweruser_group2) do
+  username = Facter.value('poweruser_name')
+  os = Facter.value('operatingsystem')
+    case os
+      when "RedHat", "CentOS", "SuSE", "Fedora"
+        system "ls -al /home/#{username}/.bashrc | awk '{print $4}'"
+      when "Debian", "Ubuntu"
+        username # in ubuntu its the same!
+      when "Darwin"
+        'staff' # 
+      else
+    end
 end
 
 # HOME of poweruser

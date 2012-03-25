@@ -56,7 +56,8 @@ class sauce ($machine_description = 'Sorry, no info provided') {
   # Facts defined by me
   $facter_custom_facts = [
     'roothome',
-    'poweruser_group', 'poweruser_name', 'poweruser_home', 'poweruser_exists', 'poweruser_email',
+    'poweruser_group', 'poweruser_name', 'poweruser_home', 'poweruser_exists', 'poweruser_email', 'poweruser_group2',
+    'nmap_installed', 'whoami', # just for testing
   ]
 
   # sauce debian packages
@@ -296,15 +297,19 @@ then source $roothome/.bashrc.riccardo ; fi\" \
 #  }
 
   if ($::id == 'root') {} else {
-    fail("Sorry, this module requires you to be ROOT (not '$id'), dont use sudo. Be brave! :)")
+    fail("Sorry(id), this module requires you to be ROOT (not '$id'), dont use sudo. Be brave! :)")
   }
+  if ($::whoami == 'root') {} else {
+    fail("Sorry(whoami), this module requires you to be ROOT (not '$id'), dont use sudo. Be brave! :)")
+  }
+
 
   cron { "hourly download for RUMP from Riccardo github and execute":  
       ensure  => present,
-      command => "cd ~/git/puppet-rump && git pull origin master && rump go && touch $basepath/cron-rump-last-update.touch",
+      command => "cd ~/git/puppet-rump && git pull origin master &&  git submodule foreach git pull origin master && rump go && touch $basepath/cron-rump-last-update.touch",
       user    => 'root',
       environment => ["PATH=$normal_path:$root_path_addon","MAILTO=$cronemail"], # this is from site.pp
-      minute  => 51,
+      minute  => 31,
   }
   # copied from http://projects.puppetlabs.com/projects/1/wiki/Cron_Patterns
   # cron { "puppet":

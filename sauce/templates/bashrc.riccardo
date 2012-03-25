@@ -24,6 +24,6 @@ alias sb='source ~/.bashrc'
 alias ss='git status'
 alias cdric="cd <%= basepath %>"
 
-hostinfo
+# hostinfo
 
 ps1_long_colored

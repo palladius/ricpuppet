@@ -1,1 +1,1 @@
-# Installs Sakura and updates the .bashrc :)
+# TODO Installs palladius/Sakura and updates the .bashrc :)

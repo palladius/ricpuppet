@@ -8,10 +8,18 @@ define hamachi::network($pass,$autojoin=true) {
   include hamachi
   # Do all the things you'd normally do, using $type_server as needed
   
-  file {"$sauce::basepath/hamachi-network-TODO-${name}.touch":
+  file {"$sauce::basepath/hamachi-network-TODO-${name}.yml":
     ensure  => file,
-    content => "name: {$name}\npassword: ${pass}\nautojoin: ${autojoin}",
-    require => File[$sauce::basepath],
+    content => "Hamachi Network Riccardo:\n name: {$name}\n password: ${pass}\n autojoin: ${autojoin}\n",
+    require => File[ $sauce::basepath ],
+  }
+
+  if ($autojoin) {
+    exec {"Joins and touches network $name":
+      command => "hamachi join '$name' '$pass' && touch $sauce::basepath/hamachi-joined-$name.ok",
+      creates => "$sauce::basepath/hamachi-joined-$name.ok",
+      path    => $sauce::normal_path;
+    }
   }
 
 }
