@@ -12,9 +12,9 @@ Custom Facts:
   fun_facts:
 <% facter_fun_facts.sort.each do |fact| -%>
     <%= fact %>: <%= scope.lookupvar('sauce::' + fact.to_s ) %>
-<% end - %>
+<% end -%>
   custom_facts:
 <% facter_custom_facts.sort.each do |fact| -%>
     <%= fact %>: <%= scope.lookupvar('sauce::' + fact.to_s ) %>
-<% end - %>
+<% end -%>
 ---
