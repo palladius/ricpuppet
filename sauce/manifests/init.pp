@@ -158,7 +158,7 @@ class sauce ($machine_description = 'Sorry, no info provided') {
 
   # If you put them in order, puppet will do the correct thing
   # and won't need the dependencies ;)
-  $sauce_skeleton_dirs = [
+  $sauce_skeleton_root_dirs = [
     $basepath,
     "$basepath/bin",
     "$basepath/downloadz",
@@ -169,15 +169,26 @@ class sauce ($machine_description = 'Sorry, no info provided') {
     "$basepath/tmp",
     "$basepath/var",
     "$basepath/var/log",
+  ]
+
+  $sauce_skeleton_poweruser_dirs = [
     "$poweruser_home/Dropbox",
     "$poweruser_home/Dropbox/tmp/",
     $dropbox_sauce_dir,
   ]
 
-  file { $sauce_skeleton_dirs:
+  file { $sauce_skeleton_root_dirs:
     ensure => 'directory',
     owner  => 'root',
     group  => $poweruser_group,
+    mode   => '0755',
+    # otherwise normal users can't get in
+  }
+  # this should belong to poweruser :)
+  file { $sauce_skeleton_poweruser_dirs:
+    ensure => 'directory',
+    owner  => $poweruser_name,
+    #group  => $poweruser_group,
     mode   => '0755',
     # otherwise normal users can't get in
   }
@@ -231,14 +242,14 @@ class sauce ($machine_description = 'Sorry, no info provided') {
     require => File[$basepath],
   }
 
-  file { "$basepath/HOSTINFO.yml":
+  file { "$basepath/hostinfo.yml":
     ensure  => present,
     content => template('sauce/hostinfo.yml'),
     require => File[$basepath],
   }
 
   # For apache visibility!
-  file { "/var/www/HOSTINFO-$hostname.txt":
+  file { "/var/www/hostinfo-$hostname.txt":
     ensure  => present,
     content => template('sauce/hostinfo.yml'),
     require => File[$basepath],
@@ -246,6 +257,7 @@ class sauce ($machine_description = 'Sorry, no info provided') {
 
   file { "$roothome/.bashrc.riccardo":
     ensure  => present,
+    owner   => $poweruser_name,
     content => template('sauce/bashrc.riccardo'),
     require => File[$basepath],
   }
