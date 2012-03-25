@@ -60,7 +60,7 @@ class sauce ($machine_description = 'Sorry, no info provided') {
   $facter_custom_facts = [
     'roothome',
     'poweruser_group', 'poweruser_name', 'poweruser_home', 'poweruser_exists', 'poweruser_email', 
-      'poweruser_simplegroup', 'poweruser_grp',
+      'poweruser_simplegroup', # 'poweruser_grp',
     'nmap_installed', 'whoami', # just for testing
   ]
 
