@@ -5,7 +5,9 @@ host_info:
   <%= fact %>: <%= scope.lookupvar('sauce::' + fact.to_s ) %>
 <% end %>
 Sauce stuff:
-  Flavour
-  Installed Packages: <%= mandatory_packages.sort.join(', ') %>
+  Flavour: <%= flavour %>
+  Installed Debian Packages: <%= mandatory_debian_packages.sort.join(', ') %>
   Installed Ruby Gems: <%= mandatory_gems.sort.join(', ') %>
+Custom Facts:
+  - <%= sauce_custom_facts %>
 ---

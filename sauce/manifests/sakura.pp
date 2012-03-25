@@ -1,0 +1,1 @@
+# Installs Sakura and updates the .bashrc :)

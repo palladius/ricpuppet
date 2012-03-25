@@ -18,7 +18,7 @@
 #     machine_description => 'optional description'
 #   }
 class sauce ($machine_description = 'Sorry, no info provided') {
-  $version = '1.1.02'
+  $version = '1.1.03'
   $verbose = true
   $basepath = '/opt/riccardo'
   $basepath_parsley_dir = "$basepath/parsley"
@@ -27,6 +27,7 @@ class sauce ($machine_description = 'Sorry, no info provided') {
   $user_path_addon = "$basepath/bin"
   $flavour = 'in bianco'
   $history = '
+1.1.03 20120325 Adding sendmail. Using "roothome" from facter
 1.1.02 20120324 bugfixes
 1.1.01 20120324 Adds root dir. Adds Cron to autoupdate itself!!! (my dream)
 1.0.04 20120324 Patched to make it work on a Mac :)
@@ -51,8 +52,13 @@ class sauce ($machine_description = 'Sorry, no info provided') {
     'architecture','uniqueid','productname'
   ]
 
+  # Facts defined by me
+  $facter_custom_facts = [
+    'roothome',
+  ]
+
   # sauce debian packages
-  $mandatory_packages = [
+  $mandatory_debian_packages = [
     'bash-completion' ,              # how can u live without it?
     'gitk',            # ditto (git is called git-core on 10.04 so maybe this)
     'libnotify-bin',                 # notify-send for sending messages.
@@ -66,6 +72,7 @@ class sauce ($machine_description = 'Sorry, no info provided') {
     # For some bug on missing LC_TYPE..
     'locales' ,
     'language-pack-en',
+    'sendmail', # to send emails
   ]
 
   $mandatory_gems = [
@@ -77,27 +84,28 @@ class sauce ($machine_description = 'Sorry, no info provided') {
   # TODO use vcsrepo
   $github_repos = [
     'palladius/sakura',
+    'palladius/puppet-rump',
   ]
 
   $sauce_template_header = "\
 #############################################################################
-# !!!BEWARE!!!
-#############################################################################
-# This file is managed by Puppet (Vanilla v$version).
-# Change at your own risk!
+# !!!BEWARE!!!    File managed by Puppet (Sauce v$version).
+#                 Change at your own risk
 #############################################################################"
 
+  ##########################
+  # defined into plugins/facter/sobenme.rb :)
   # Used in the template
   # TODO $roothome = Facter['richome']
-  case $::operatingsystem {
-    Darwin: {
-      $roothome = '/var/root'  # Mac has different root
-    }
-    default: {
-      #fail("sauce doesn't know what ROOTHOME you have for '${::operatingsystem}' OS! I guess /root/?")
-      $roothome = '/root'
-    }
-  }
+  #case $::operatingsystem {
+  #  Darwin: {
+  #    $roothome = '/var/root'  # Mac has different root
+  #  }
+  #  default: {
+  #    #fail("sauce doesn't know what ROOTHOME you have for '${::operatingsystem}' OS! I guess /root/?")
+  #    $roothome = '/root'
+  #  }
+  #}
 
   #if (defined('machine_description')) {
   #  $machine_description = "Dan is right: $machine_description"
@@ -109,12 +117,28 @@ class sauce ($machine_description = 'Sorry, no info provided') {
   package {$mandatory_packages:
     ensure => 'installed'
   }
+  case $::operatingsystem {
+    debian: {
+      package {$mandatory_debian_packages:
+        ensure => 'installed'
+      }
+    }
+    ubuntu: {
+      package {$mandatory_debian_packages:
+        ensure => 'installed'
+      }
+    }
+    default: {
+      notify {"sauce doesn't know how to apt-get install my debian packages for '${::operatingsystem}' OS! \
+  Expect some packages NOT to be correctly installed": }
+    }
+  }
 
   # Ruby gems we want installed
   package { $mandatory_gems:
     ensure   => installed,
     provider => 'gem',
-    require  => Package['rubygems']
+    #require  => Package['rubygems']
   }
 
   Exec { path => [
@@ -208,7 +232,7 @@ class sauce ($machine_description = 'Sorry, no info provided') {
     require => File[$basepath],
   }
   # TODO refactor in a defined type
-  file { '/home/riccardo/.bashrc.riccardo':
+  file { "$poweruser_home/.bashrc.riccardo":
     ensure  => present,
     owner   => 'riccardo',
     group   => 'riccardo',
@@ -254,11 +278,11 @@ then source $roothome/.bashrc.riccardo ; fi\" \
       #managehome => true,  # gives error on Mac
     }
 
-  if ($::richome == undef) {
-    fail("Facter shouold have defined \$richome for me in sauce! richome='$richome'")
-  } else {
-    notify{"RICHOME correctly defined! richome='$richome'": }
-  }
+#  if ($::richome == undef) {
+#    fail("Facter shouold have defined \$richome for me in sauce! richome='$richome'")
+#  } else {
+#    notify{"RICHOME correctly defined! richome='$richome'": }
+#  }
 
   cron { "hourly download for RUMP from Riccardo github and execute":  
       ensure  => present,
