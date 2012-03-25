@@ -2,13 +2,14 @@
 ##################################################################
 # Host: $fqdn
 # OS:   $operatingsystem $operatingsystemrelease
+# Now:  $now
 ##################################################################
 Sauce stuff:
   Flavour: <%= flavour %>
   Installed Debian Packages: <%= mandatory_debian_packages.sort.join(', ') %>
   Installed Ruby Gems: <%= mandatory_gems.sort.join(', ') %>
 Custom Facts:
-  Generic: <%= sauce_custom_facts.join(', ') %>
+  Generic: <%= sauce_custom_facts %>
   fun_facts:
 <% facter_fun_facts.each do |fact| -%>
       <%= fact %>: <%= scope.lookupvar('sauce::' + fact.to_s ) %>

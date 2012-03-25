@@ -18,15 +18,17 @@
 #     machine_description => 'optional description'
 #   }
 class sauce ($machine_description = 'Sorry, no info provided') {
-  $version = '1.2.01bugfix'
+  $version = '1.2.02'
   $verbose = true
   $basepath = '/opt/riccardo'
   $basepath_parsley_dir = "$basepath/parsley"
   $root_path_addon = "$basepath/bin:$basepath/sbin:/var/lib/gems/1.8/bin/"
   $normal_path     = '/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/sbin:/usr/local/bin'
   $user_path_addon = "$basepath/bin"
+  $dropbox_sauce_dir = "$poweruser_home/Dropbox/tmp/sauce/"
   $flavour = 'in bianco'
   $history = '
+1.2.02 20120325 Added dropbox_sauce_dir
 1.2.01 20120325 cron also updates submodules.. (should..)
 1.1.04 20120325 Adding apache2, better facter and Mac support (wow!)
 1.1.03 20120325 Adding sendmail. Using "roothome" from facter
@@ -166,6 +168,9 @@ class sauce ($machine_description = 'Sorry, no info provided') {
     "$basepath/tmp",
     "$basepath/var",
     "$basepath/var/log",
+    "$poweruser_home/Dropbox",
+    "$poweruser_home/Dropbox/tmp/",
+    $dropbox_sauce_dir,
   ]
 
   file { $sauce_skeleton_dirs:
@@ -227,14 +232,14 @@ class sauce ($machine_description = 'Sorry, no info provided') {
 
   file { "$basepath/HOSTINFO.yml":
     ensure  => present,
-    content => template('sauce/HOSTINFO.yml'),
+    content => template('sauce/hostinfo.yml'),
     require => File[$basepath],
   }
 
   # For apache visibility!
   file { "/var/www/HOSTINFO-$hostname.txt":
     ensure  => present,
-    content => template('sauce/HOSTINFO.yml'),
+    content => template('sauce/hostinfo.yml'),
     require => File[$basepath],
   }
 
@@ -244,6 +249,7 @@ class sauce ($machine_description = 'Sorry, no info provided') {
     require => File[$basepath],
   }
 
+  ############
   # TODO refactor in a defined type
   file { "$poweruser_home/.bashrc.riccardo":
     ensure  => present,
@@ -253,6 +259,13 @@ class sauce ($machine_description = 'Sorry, no info provided') {
     require => File[$basepath],
   }
 
+  file { "$dropbox_sauce_dir/hostinfo-$::fqdn.yml":
+    ensure  => present,
+    owner   => $power_user,
+    group   => $poweruser_group,
+    content => template("sauce/hostinfo.yml"),
+    require => File[$dropbox_sauce_dir],
+  }
   # Mabnual exec (inelegant)
   exec {"echo \"if [ -f $roothome/.bashrc.riccardo ] ; \
 then source $roothome/.bashrc.riccardo ; fi\" \
