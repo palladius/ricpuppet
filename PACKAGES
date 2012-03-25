@@ -5,8 +5,7 @@ debian
 _docs
 etckeeper             OK works
 foremanric
-graphite
-helloworld
+ganeti            Copied from: https://github.com/dcsobral/puppet-ganeti
 iptables
 java
 mediawiki
