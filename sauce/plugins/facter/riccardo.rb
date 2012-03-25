@@ -21,10 +21,3 @@ Facter.add(:richome) do
     end
 end
 
-# just a dynamism test :)
-Facter.add("#{my_power_user}_home") do
-    setcode do
-      `echo ~#{my_power_user}`
-    end
-end
-

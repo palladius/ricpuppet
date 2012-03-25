@@ -1,15 +1,14 @@
 <%= sauce_template_header %>
-# Extracted with facter, conceptually
-#host_info:
+##################################################################
+# Host: $fqdn
+# OS:   $operatingsystem $operatingsystemrelease
+##################################################################
 Sauce stuff:
   Flavour: <%= flavour %>
   Installed Debian Packages: <%= mandatory_debian_packages.sort.join(', ') %>
   Installed Ruby Gems: <%= mandatory_gems.sort.join(', ') %>
 Custom Facts:
-  Generic: <%= sauce_custom_facts %>
-  power user:
-    user: 
-    group: <%= poweruser_group %>
+  Generic: <%= sauce_custom_facts.join(', ') %>
   fun_facts:
 <% facter_fun_facts.each do |fact| -%>
       <%= fact %>: <%= scope.lookupvar('sauce::' + fact.to_s ) %>

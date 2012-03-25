@@ -18,7 +18,7 @@
 #     machine_description => 'optional description'
 #   }
 class sauce ($machine_description = 'Sorry, no info provided') {
-  $version = '1.2.01'
+  $version = '1.2.01bugfix'
   $verbose = true
   $basepath = '/opt/riccardo'
   $basepath_parsley_dir = "$basepath/parsley"

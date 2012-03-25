@@ -8,7 +8,7 @@ $dflt_poweruser_name = 'riccardo' # on my CYGWIN im 'riccardo_carlesso'
 # minor weight. See here:
 # http://docs.puppetlabs.com/guides/custom_facts.html
 Facter.add(:poweruser_group) do
-  has_weight 100 # high
+  #has_weight 100 # high
   return File.stat(Facter.value(:poweruser_home)).gid # rescue Facter.value(:poweruser_name)
   sample_file = File.expand_path(Facter.value(:poweruser_home) + "/.bashrc")
   setcode do
@@ -26,12 +26,12 @@ Facter.add(:poweruser_group) do
 end
 
 # on Mac it's 'staff'. On Ubuntu/Debian it equals the username
-Facter.add(:poweruser_group) do
-  has_weight 50 # Low
-  setcode do
-    :staff
-  end
-end
+# Facter.add(:poweruser_group) do
+#   has_weight 50 # Low
+#   setcode do
+#     :staff
+#   end
+# end
 
 Facter.add(:poweruser_group2) do
   username = Facter.value('poweruser_name')
@@ -72,3 +72,10 @@ Facter.add(:poweruser_email) do
       Facter.value :cron_name
     end
 end
+
+# just a dynamism test :)
+#Facter.add("#{my_power_user}_home") do
+#    setcode do
+#      `echo ~#{my_power_user}`
+#    end
+#end
