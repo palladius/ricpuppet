@@ -46,12 +46,11 @@ end
 Facter.add(:poweruser_group) do
   setcode do
     username = Facter.value('poweruser_name')
-    #{}"'boh': username=#{username}"
     case Facter.value('operatingsystem')
        when "Darwin"
          'staff'
        else
-         'riccardo_else'
+         username || 'riccardo'
     end
   end
 end
