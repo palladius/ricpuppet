@@ -101,20 +101,6 @@ class sauce ($machine_description = 'Sorry, no info provided') {
 #                 Change at your own risk
 #############################################################################"
 
-  ##########################
-  # defined into plugins/facter/sobenme.rb :)
-  # Used in the template
-  # TODO $roothome = Facter['richome']
-  #case $::operatingsystem {
-  #  Darwin: {
-  #    $roothome = '/var/root'  # Mac has different root
-  #  }
-  #  default: {
-  #    #fail("sauce doesn't know what ROOTHOME you have for '${::operatingsystem}' OS! I guess /root/?")
-  #    $roothome = '/root'
-  #  }
-  #}
-
   #if (defined('machine_description')) {
   #  $machine_description = "Dan is right: $machine_description"
   #} else {
@@ -188,7 +174,7 @@ class sauce ($machine_description = 'Sorry, no info provided') {
   file { $sauce_skeleton_poweruser_dirs:
     ensure => 'directory',
     owner  => $poweruser_name,
-    #group  => $poweruser_group,
+    group  => $poweruser_group,
     mode   => '0755',
     # otherwise normal users can't get in
   }
@@ -266,7 +252,7 @@ class sauce ($machine_description = 'Sorry, no info provided') {
   # TODO refactor in a defined type
   file { "$poweruser_home/.bashrc.riccardo":
     ensure  => present,
-    owner   => $power_user,
+    owner   => $poweruser_name,
     group   => $poweruser_group,
     content => template('sauce/bashrc.riccardo'),
     require => File[$basepath],

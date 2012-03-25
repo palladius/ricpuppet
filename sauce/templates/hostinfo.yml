@@ -1,9 +1,8 @@
 <%= sauce_template_header %>
-##################################################################
 # Host: <%= fqdn %>
 # OS:   <%= operatingsystem %> <%= operatingsystemrelease %>
 # Now:  <%= now %>
-##################################################################
+#############################################################################
 Sauce stuff:
   Flavour: <%= flavour %>
   Installed Debian Packages: <%= mandatory_debian_packages.sort.join(', ') %>
@@ -12,10 +11,10 @@ Custom Facts:
   Generic: <%= sauce_custom_facts %>
   fun_facts:
 <% facter_fun_facts.sort.each do |fact| -%>
-      <%= fact %>: <%= scope.lookupvar('sauce::' + fact.to_s ) %>
-<% end %>
+    <%= fact %>: <%= scope.lookupvar('sauce::' + fact.to_s ) %>
+<% end - %>
   custom_facts:
 <% facter_custom_facts.sort.each do |fact| -%>
     <%= fact %>: <%= scope.lookupvar('sauce::' + fact.to_s ) %>
-<% end %>
+<% end - %>
 ---
