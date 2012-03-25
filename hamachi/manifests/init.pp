@@ -14,16 +14,23 @@
 # Sample Usage:
 #   include hamachi
 #
-class hamachi($hamachi_hostname = $hostname) {
+class hamachi($hamachi_hostname = $::hostname) {
   require sauce
 
-  $hamachiver = '0.9.2'
+  $hamachiver = '0.9.3'
   # architecture: i386 or what...
   $deb_filename = "logmein-hamachi_2.1.0.17-1_$::architecture.deb"
   #$deb_filename = 'logmein-hamachi_2.1.0.17-1_i386.deb' # this works
   $deb_path= "$sauce::basepath/downloadz/$deb_filename"
 
-  # if ($operatingsystem = 'Darwin') # installs on Mac
+  if ($::operatingsystem == 'Darwin') {
+    # installs on Mac
+    notify{ 'Dont know how the hell to install hamachi on a Mac (yet)': }
+  } 
+
+  if ($::operatingsystem == 'Ubuntu') {
+    # installs on Ubuntu
+    notify{'Lets do it on Debian/Ubuntu': }
 
   # TODO check architecture
   # 1. Copies the deb file
@@ -71,4 +78,6 @@ class hamachi($hamachi_hostname = $hostname) {
       content => "#TODO execute this once:\nhamachi set-nick $hamachi_hostname",
       require => File["$sauce::basepath/downloadz"];
   }
+
+  } # Ubuntu stuff
 }

@@ -18,7 +18,7 @@
 #     machine_description => 'optional description'
 #   }
 class sauce ($machine_description = 'Sorry, no info provided') {
-  $version = '1.1.03'
+  $version = '1.1.04'
   $verbose = true
   $basepath = '/opt/riccardo'
   $basepath_parsley_dir = "$basepath/parsley"
@@ -27,6 +27,7 @@ class sauce ($machine_description = 'Sorry, no info provided') {
   $user_path_addon = "$basepath/bin"
   $flavour = 'in bianco'
   $history = '
+1.1.04 20120325 Adding apache2, better facter and Mac support (wow!)
 1.1.03 20120325 Adding sendmail. Using "roothome" from facter
 1.1.02 20120324 bugfixes
 1.1.01 20120324 Adds root dir. Adds Cron to autoupdate itself!!! (my dream)
@@ -55,6 +56,7 @@ class sauce ($machine_description = 'Sorry, no info provided') {
   # Facts defined by me
   $facter_custom_facts = [
     'roothome',
+    'poweruser_group', 'poweruser_name', 'poweruser_home', 'poweruser_exists', 'poweruser_email',
   ]
 
   # sauce debian packages
@@ -73,6 +75,7 @@ class sauce ($machine_description = 'Sorry, no info provided') {
     'locales' ,
     'language-pack-en',
     'sendmail', # to send emails
+    'apache2',  # to expose my info :)
   ]
 
   $mandatory_gems = [
@@ -166,7 +169,7 @@ class sauce ($machine_description = 'Sorry, no info provided') {
   file { $sauce_skeleton_dirs:
     ensure => 'directory',
     owner  => 'root',
-    #group => "riccardo",
+    group  => $poweruser_group,
     mode   => '0755',
     # otherwise normal users can't get in
   }
@@ -226,16 +229,24 @@ class sauce ($machine_description = 'Sorry, no info provided') {
     require => File[$basepath],
   }
 
+  # For apache visibility!
+  file { "/var/www/HOSTINFO-$hostname.txt":
+    ensure  => present,
+    content => template('sauce/HOSTINFO.yml'),
+    require => File[$basepath],
+  }
+
   file { "$roothome/.bashrc.riccardo":
     ensure  => present,
     content => template('sauce/bashrc.riccardo'),
     require => File[$basepath],
   }
+
   # TODO refactor in a defined type
   file { "$poweruser_home/.bashrc.riccardo":
     ensure  => present,
-    owner   => 'riccardo',
-    group   => 'riccardo',
+    owner   => $power_user,
+    group   => $poweruser_group,
     content => template('sauce/bashrc.riccardo'),
     require => File[$basepath],
   }
@@ -283,6 +294,10 @@ then source $roothome/.bashrc.riccardo ; fi\" \
 #  } else {
 #    notify{"RICHOME correctly defined! richome='$richome'": }
 #  }
+
+  if ($::id == 'root') {} else {
+    fail("Sorry, this module requires you to be ROOT (not '$id'), dont use sudo. Be brave! :)")
+  }
 
   cron { "hourly download for RUMP from Riccardo github and execute":  
       ensure  => present,
