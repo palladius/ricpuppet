@@ -11,11 +11,11 @@ Sauce stuff:
 Custom Facts:
   Generic: <%= sauce_custom_facts %>
   fun_facts:
-<% facter_fun_facts.each do |fact| -%>
+<% facter_fun_facts.sort.each do |fact| -%>
       <%= fact %>: <%= scope.lookupvar('sauce::' + fact.to_s ) %>
 <% end %>
   custom_facts:
-<% facter_custom_facts.each do |fact| -%>
+<% facter_custom_facts.sort.each do |fact| -%>
     <%= fact %>: <%= scope.lookupvar('sauce::' + fact.to_s ) %>
 <% end %>
 ---

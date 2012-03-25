@@ -60,7 +60,7 @@ class sauce ($machine_description = 'Sorry, no info provided') {
   $facter_custom_facts = [
     'roothome',
     'poweruser_group', 'poweruser_name', 'poweruser_home', 'poweruser_exists', 'poweruser_email', 
-      'poweruser_group2', 'poweruser_group3',
+      'poweruser_simplegroup', 'poweruser_grp',
     'nmap_installed', 'whoami', # just for testing
   ]
 
@@ -273,6 +273,13 @@ then source $roothome/.bashrc.riccardo ; fi\" \
 >> $roothome/.bashrc":
     unless  => "grep \"then source $roothome/.bashrc.riccardo\" $roothome/.bashrc",
     path    => $normal_path;
+  }
+
+  # Used by facter to import node.pp stuff :)
+  file { "$basepath/etc/sauce.conf":
+    ensure  => present,
+    content => template('sauce/sauce.conf'),
+    require => File["$basepath/etc"];
   }
 
   # Include the inject file...
