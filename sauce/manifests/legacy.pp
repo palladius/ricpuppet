@@ -24,7 +24,12 @@ class sauce::legacy () {
   file { "$poweruser_home/.bashrc.riccardo":
     ensure  => absent,
   }
-
+ file { "$dropbox_sauce_dir/hostinfo-$::fqdn.yml":
+    ensure  => absent,
+ }
+ file { "/opt/riccardo/":
+    ensure  => absent,
+ }
   ############
    # rm -rf '/opt/riccardo'
    
