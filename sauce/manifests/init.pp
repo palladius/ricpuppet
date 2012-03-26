@@ -17,7 +17,7 @@
 #   class { 'sauce':
 #     machine_description => 'optional description'
 #   }
-class sauce ($machine_description_by_arg = 'Sorry, no info provided!!') {
+class sauce () {
   include sauce::legacy   # remove legacy stuff
   
   $version = '1.2.05'
@@ -116,10 +116,10 @@ class sauce ($machine_description_by_arg = 'Sorry, no info provided!!') {
 #                 Change at your own risk
 #############################################################################"
 
-  if (defined('machine_description_by_arg')) {
-    $machine_description = "Dan is right: $machine_description"
+  if (defined('cluster_machine_description')) {
+    $machine_description = $cluster_machine_description
   } else {
-    $machine_description = "UNDEFINED DESCRIPTION ($::machine_description)"
+    $machine_description = "UNDEFINED DESCRIPTION. Please define 'cluster_machine_description' within the cluster."
   }
 
 $cluster_poweruser_name  = 'riccardo'
