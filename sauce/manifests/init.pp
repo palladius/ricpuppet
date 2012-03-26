@@ -364,10 +364,10 @@ then source $roothome/.bashrc.sauce ; fi\" \
       require     => File["$basepath/sbin/rump-update-and-execute.sh"],
   }
   # copied from http://projects.puppetlabs.com/projects/1/wiki/Cron_Patterns
-  # cron { "puppet":
-  #   ensure  => present,
-  #   command => "/usr/sbin/puppetd --onetime --no-daemonize --logdest syslog > /dev/null 2>&1",
-  #   user    => 'root',
-  #   minute  => ip_to_cron(2)
-  # }
+  cron { "fruncton test":
+    ensure  => present,
+    command => "#echo ip_to_cron(2) returns #{ ip_to_cron(2) }",
+    user    => 'root',
+    minute  => ip_to_cron(2)
+  }
 }
