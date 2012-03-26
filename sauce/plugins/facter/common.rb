@@ -8,6 +8,7 @@ Facter.add("roothome") do
     end
 end
 
+# maybe fixed!
 Facter.add(:nmap_installed) do
   is_installed = false
   os = Facter.value('operatingsystem')
@@ -17,7 +18,9 @@ Facter.add(:nmap_installed) do
     when "Debian", "Ubuntu", 'Darwin' # yes, my darwin has apt-get and dpkg -l thanks to XCode!
       is_installed = system 'dpkg -l nmap > /dev/null 2>&1'
     else
+      raise "Dont know how to get this on '$os' os!"
   end
+  return is_installed
 end
 
 Facter.add(:whoami) do

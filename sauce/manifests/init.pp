@@ -29,6 +29,7 @@ class sauce ($machine_description_by_arg = 'Sorry, no info provided!!') {
   $user_path_addon = "$basepath/bin"
   $dropbox_sauce_dir = "$poweruser_home/Dropbox/tmp/sauce/" # pers stuff
   $flavour = 'in bianco'
+  $default_poweruser_name = 'inbianco'
   $history = '
 1.2.05 20120326 Adding legacy to remove old stuff :)
 1.2.04 20120326 Changed basedir to /opt/palladius/ and so dflt username, Cron cleanup
@@ -64,10 +65,13 @@ class sauce ($machine_description_by_arg = 'Sorry, no info provided!!') {
   # Facts defined by me
   $facter_custom_facts = [
     'roothome',
-    'poweruser_group', 'poweruser_name', 'poweruser_home', 
+    'poweruser_name', # from site.pp / here
+    'poweruser_name_facter', #facter one (for testing purposes)
+    'poweruser_group',  'poweruser_home', 
       'poweruser_exists', 'poweruser_email',
       'poweruser_simplegroup', # 'poweruser_grp',
-    'nmap_installed', 'whoami', # just for testing
+    'nmap_installed', # TODO better
+    'whoami', # just for testing
   ]
 
   # sauce debian packages
@@ -115,6 +119,13 @@ class sauce ($machine_description_by_arg = 'Sorry, no info provided!!') {
     $machine_description = "UNDEFINED DESCRIPTION ($::machine_description)"
   }
 
+$cluster_poweruser_name  = 'riccardo'
+  if (defined('cluster_poweruser_name')) {
+    $poweruser_name = $cluster_poweruser_name
+  } else {
+    $poweruser_name = $default_poweruser_name
+  }
+  
   # guarantees these base packages are installed everywhere :)
   package {$mandatory_packages:
     ensure => 'installed'

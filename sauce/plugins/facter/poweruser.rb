@@ -5,9 +5,7 @@
 # $power_user defined in the cluster!
 require 'facter'
 
-#$dflt_poweruser_name = 'riccardo_dflt' # on my CYGWIN im 'riccardo_carlesso'
-
-# must be first!
+# SHOULDNT BE HERE!!!
 Facter.add(:poweruser_name) do
   setcode do
       File.readlines(scope.lookupvar('sauce::basepath') + '/etc/sauce.conf').select{|l| 
