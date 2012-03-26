@@ -17,17 +17,21 @@
 #   class { 'sauce':
 #     machine_description => 'optional description'
 #   }
-class sauce ($machine_description = 'Sorry, no info provided') {
-  $version = '1.2.03b'
+class sauce ($machine_description_by_arg = 'Sorry, no info provided!!') {
+  include sauce::legacy   # remove legacy stuff
+  
+  $version = '1.2.05'
   $verbose = true
-  $basepath = '/opt/riccardo'
+  $basepath = '/opt/palladius'
   $basepath_parsley_dir = "$basepath/parsley"
   $root_path_addon = "$basepath/bin:$basepath/sbin:/var/lib/gems/1.8/bin/"
-  $normal_path     = '/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/sbin:/usr/local/bin'
+  $normal_path = '/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/sbin:/usr/local/bin'
   $user_path_addon = "$basepath/bin"
-  $dropbox_sauce_dir = "$poweruser_home/Dropbox/tmp/sauce/"
+  $dropbox_sauce_dir = "$poweruser_home/Dropbox/tmp/sauce/" # pers stuff
   $flavour = 'in bianco'
   $history = '
+1.2.05 20120326 Adding legacy to remove old stuff :)
+1.2.04 20120326 Changed basedir to /opt/palladius/ and so dflt username, Cron cleanup
 1.2.03 20120326 Minor changes. Huge bug fixed. Migrating cron job to file
 1.2.02 20120325 Added dropbox_sauce_dir
 1.2.01 20120325 cron also updates submodules.. (should..)
@@ -60,7 +64,8 @@ class sauce ($machine_description = 'Sorry, no info provided') {
   # Facts defined by me
   $facter_custom_facts = [
     'roothome',
-    'poweruser_group', 'poweruser_name', 'poweruser_home', 'poweruser_exists', 'poweruser_email', 
+    'poweruser_group', 'poweruser_name', 'poweruser_home', 
+      'poweruser_exists', 'poweruser_email',
       'poweruser_simplegroup', # 'poweruser_grp',
     'nmap_installed', 'whoami', # just for testing
   ]
@@ -74,7 +79,7 @@ class sauce ($machine_description = 'Sorry, no info provided') {
     # hey... this is puppet!
     'rubygems',
     'links', 'lynx', 'wget',         # For web
-    'libxmpp4r-ruby',                # Jabber library for my notify scripts
+    #'libxmpp4r-ruby',                # Jabber library for my notify scripts
     'ruby-full', 'build-essential',  # Suggested by DHH Ruby Wiki
     'fping','nmap','traceroute',     # Networking basics, wtf! :)
     # For some bug on missing LC_TYPE..
@@ -102,11 +107,11 @@ class sauce ($machine_description = 'Sorry, no info provided') {
 #                 Change at your own risk
 #############################################################################"
 
-  #if (defined('machine_description')) {
-  #  $machine_description = "Dan is right: $machine_description"
-  #} else {
-  #  $machine_description = "UNDEFINED DESCRIPTION ($::machine_description)"
-  #}
+  if (defined('machine_description_by_arg')) {
+    $machine_description = "Dan is right: $machine_description"
+  } else {
+    $machine_description = "UNDEFINED DESCRIPTION ($::machine_description)"
+  }
 
   # guarantees these base packages are installed everywhere :)
   package {$mandatory_packages:
@@ -239,27 +244,27 @@ class sauce ($machine_description = 'Sorry, no info provided') {
   file { "/var/www/hostinfo-$hostname.txt":
     ensure  => present,
     content => template('sauce/hostinfo.yml'),
-    require => File[$basepath],
+    require => [File[$basepath],Package['apache2']],
   }
 
-  file { "$roothome/.bashrc.riccardo":
+  file { "$roothome/.bashrc.sauce":
     ensure  => present,
     owner   => $poweruser_name,
-    content => template('sauce/bashrc.riccardo'),
+    content => template('sauce/bashrc.sauce'),
     require => File[$basepath],
   }
 
   ############
   # TODO refactor in a defined type
-  file { "$poweruser_home/.bashrc.riccardo":
+  file { "$poweruser_home/.bashrc.sauce":
     ensure  => present,
     owner   => $poweruser_name,
     group   => $poweruser_group,
-    content => template('sauce/bashrc.riccardo'),
+    content => template('sauce/bashrc.sauce'),
     require => File[$basepath],
   }
 
-  file { "$dropbox_sauce_dir/hostinfo-$::fqdn.yml":
+  file { "$dropbox_sauce_dir/$::fqdn.yml":
     ensure  => present,
     owner   => $power_user,
     group   => $poweruser_group,
@@ -267,10 +272,10 @@ class sauce ($machine_description = 'Sorry, no info provided') {
     require => File[$dropbox_sauce_dir],
   }
   # Mabnual exec (inelegant)
-  exec {"echo \"if [ -f $roothome/.bashrc.riccardo ] ; \
-then source $roothome/.bashrc.riccardo ; fi\" \
+  exec {"echo \"if [ -f $roothome/.bashrc.sauce ] ; \
+then source $roothome/.bashrc.sauce ; fi\" \
 >> $roothome/.bashrc":
-    unless  => "grep \"then source $roothome/.bashrc.riccardo\" $roothome/.bashrc",
+    unless  => "grep \"then source $roothome/.bashrc.sauce\" $roothome/.bashrc",
     path    => $normal_path;
   }
 
@@ -288,7 +293,7 @@ then source $roothome/.bashrc.riccardo ; fi\" \
   }
 
   # Include the inject file...
-  file { "$basepath/bashrc.inject":
+  file { "$basepath/tmp/bashrc.inject":
     ensure  => present,
     content => template('sauce/bashrc.inject'),
     require => File[$basepath];
@@ -296,10 +301,10 @@ then source $roothome/.bashrc.riccardo ; fi\" \
 
   # catting for user Riccardo.
   # TODO make it modular for user XXXX'
-  exec {"cat '$basepath/bashrc.inject' >> ~riccardo/.bashrc":
+  exec {"cat '$basepath/tmp/bashrc.inject' >> ~riccardo/.bashrc":
     unless  => 'grep "bashrc.inject START" ~riccardo/.bashrc',
     path    => $normal_path,
-    require => File["$basepath/bashrc.inject"];
+    require => File["$basepath/tmp/bashrc.inject"];
   }
 
   # Symlinking our logs into /var/log/riccardo/
@@ -330,19 +335,12 @@ then source $roothome/.bashrc.riccardo ; fi\" \
     fail("Sorry(whoami), this module requires you to be ROOT (not '$id'), dont use sudo. Be brave! :)")
   }
 
-  cron { "hourly download for RUMP from Riccardo github and execute":  
-      ensure  => present,
-      command => "cd ~/git/puppet-rump && git pull origin master &&  git submodule foreach git pull origin master && rump go && touch $basepath/cron-rump-last-update.touch",
-      user    => 'root',
-      environment => ["PATH=$normal_path:$root_path_addon","MAILTO=$cronemail"], # this is from site.pp
-      minute  => 31,
-  }
   cron { "periodically update rump from Riccardo github and execute":  
       ensure      => present,
       command     => "$basepath/sbin/rump-update-and-execute.sh",
       user        => 'root',
       environment => ["PATH=$normal_path:$root_path_addon","MAILTO=$cronemail"], # this is from site.pp
-      minute      => [1,16,46],
+      minute      => [1,16,31,46],
       require     => File["$basepath/sbin/rump-update-and-execute.sh"],
   }
   # copied from http://projects.puppetlabs.com/projects/1/wiki/Cron_Patterns

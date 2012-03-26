@@ -1,5 +1,5 @@
 
 ########################### Added by Puppet ###################################
 # bashrc.inject START
-if [ -f ~/.bashrc.riccardo ] ; then . ~/.bashrc.riccardo ; fi
+if [ -f ~/.bashrc.sauce ] ; then . ~/.bashrc.sauce ; fi
 # bashrc.inject END
