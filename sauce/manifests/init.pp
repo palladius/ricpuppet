@@ -14,13 +14,11 @@
 #   - $basepath (basedir for all my stuff...)
 #
 # Sample Usage:
-#   class { 'sauce':
-#     machine_description => 'optional description'
-#   }
+#   include  'sauce':
 class sauce () {
   include sauce::legacy   # remove legacy stuff
   
-  $version = '1.2.05'
+  $version = '1.2.06'
   $verbose = true
   $basepath = '/opt/palladius'
   $basepath_parsley_dir = "$basepath/parsley"
@@ -31,6 +29,7 @@ class sauce () {
   $flavour = 'in bianco'
   $default_poweruser_name = 'inbianco'
   $history = '
+1.2.06 20120326 My first working function
 1.2.05 20120326 Adding legacy to remove old stuff :)
 1.2.04 20120326 Changed basedir to /opt/palladius/ and so dflt username, Cron cleanup
 1.2.03 20120326 Minor changes. Huge bug fixed. Migrating cron job to file
@@ -62,7 +61,7 @@ class sauce () {
     'architecture','uniqueid','productname'
   ]
 
-  $library_user_home = get_home($poweruser_name)  # test ruby library
+  $library_user_home = get_home  # test ruby library
   # Facts defined by me
   $facter_custom_facts = [
     'roothome',
@@ -342,12 +341,6 @@ then source $roothome/.bashrc.sauce ; fi\" \
       #managehome => true,  # gives error on Mac
     }
 
-#  if ($::richome == undef) {
-#    fail("Facter shouold have defined \$richome for me in sauce! richome='$richome'")
-#  } else {
-#    notify{"RICHOME correctly defined! richome='$richome'": }
-#  }
-
   if ($::id == 'root') {} else {
     fail("Sorry(id), this module requires you to be ROOT (not '$id'), dont use sudo. Be brave! :)")
   }
@@ -363,11 +356,5 @@ then source $roothome/.bashrc.sauce ; fi\" \
       minute      => [1,16,31,46],
       require     => File["$basepath/sbin/rump-update-and-execute.sh"],
   }
-  # copied from http://projects.puppetlabs.com/projects/1/wiki/Cron_Patterns
-  cron { "fruncton test":
-    ensure  => present,
-    command => "#echo ip_to_cron(2) returns #{ ip_to_cron(2) }",
-    user    => 'root',
-    minute  => ip_to_cron(2)
-  }
+
 }

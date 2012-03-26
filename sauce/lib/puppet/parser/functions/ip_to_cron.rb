@@ -15,13 +15,13 @@
 module Puppet::Parser::Functions
     newfunction(:ip_to_cron, :type => :rvalue) do |args|
         occours = args[0].to_i || 1
-        scope   = args[1].to_i || 60
+        myscope   = args[1].to_i || 60
         ip      = lookupvar('ipaddress').split('.')[3].to_i
-        base    = ip % scope
+        base    = ip % myscope
         if occours == 1
             base
         else
-            (1..occours).map {|i| ((base - (scope / occours * i)) % scope }.sort
+            (1..occours).map {|i| ((base - (myscope / occours * i)) % myscope) }.sort
         end
     end
 end
