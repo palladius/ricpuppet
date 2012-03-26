@@ -18,7 +18,7 @@
 #     machine_description => 'optional description'
 #   }
 class sauce ($machine_description_by_arg = 'Sorry, no info provided!!') {
-  $version = '1.2.04'
+  $version = '1.2.04b'
   $verbose = true
   $basepath = '/opt/palladius'
   $basepath_parsley_dir = "$basepath/parsley"
@@ -76,7 +76,7 @@ class sauce ($machine_description_by_arg = 'Sorry, no info provided!!') {
     # hey... this is puppet!
     'rubygems',
     'links', 'lynx', 'wget',         # For web
-    'libxmpp4r-ruby',                # Jabber library for my notify scripts
+    #'libxmpp4r-ruby',                # Jabber library for my notify scripts
     'ruby-full', 'build-essential',  # Suggested by DHH Ruby Wiki
     'fping','nmap','traceroute',     # Networking basics, wtf! :)
     # For some bug on missing LC_TYPE..
@@ -244,20 +244,20 @@ class sauce ($machine_description_by_arg = 'Sorry, no info provided!!') {
     require => [File[$basepath],Package['apache2']],
   }
 
-  file { "$roothome/.bashrc.riccardo":
+  file { "$roothome/.bashrc.sauce":
     ensure  => present,
     owner   => $poweruser_name,
-    content => template('sauce/bashrc.riccardo'),
+    content => template('sauce/bashrc.sauce'),
     require => File[$basepath],
   }
 
   ############
   # TODO refactor in a defined type
-  file { "$poweruser_home/.bashrc.riccardo":
+  file { "$poweruser_home/.bashrc.sauce":
     ensure  => present,
     owner   => $poweruser_name,
     group   => $poweruser_group,
-    content => template('sauce/bashrc.riccardo'),
+    content => template('sauce/bashrc.sauce'),
     require => File[$basepath],
   }
 
@@ -269,10 +269,10 @@ class sauce ($machine_description_by_arg = 'Sorry, no info provided!!') {
     require => File[$dropbox_sauce_dir],
   }
   # Mabnual exec (inelegant)
-  exec {"echo \"if [ -f $roothome/.bashrc.riccardo ] ; \
-then source $roothome/.bashrc.riccardo ; fi\" \
+  exec {"echo \"if [ -f $roothome/.bashrc.sauce ] ; \
+then source $roothome/.bashrc.sauce ; fi\" \
 >> $roothome/.bashrc":
-    unless  => "grep \"then source $roothome/.bashrc.riccardo\" $roothome/.bashrc",
+    unless  => "grep \"then source $roothome/.bashrc.sauce\" $roothome/.bashrc",
     path    => $normal_path;
   }
 
