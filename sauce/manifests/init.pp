@@ -330,19 +330,19 @@ then source $roothome/.bashrc.riccardo ; fi\" \
     fail("Sorry(whoami), this module requires you to be ROOT (not '$id'), dont use sudo. Be brave! :)")
   }
 
-  #cron { "hourly download for RUMP from Riccardo github and execute":  
-  #    ensure  => present,
-  #    command => "cd ~/git/puppet-rump && git pull origin master &&  git submodule foreach git pull origin master && rump go && touch $basepath/cron-rump-last-update.touch",
-  #    user    => 'root',
-  #    environment => ["PATH=$normal_path:$root_path_addon","MAILTO=$cronemail"], # this is from site.pp
-  #    minute  => 31,
-  #}
   cron { "hourly download for RUMP from Riccardo github and execute":  
+      ensure  => present,
+      command => "cd ~/git/puppet-rump && git pull origin master &&  git submodule foreach git pull origin master && rump go && touch $basepath/cron-rump-last-update.touch",
+      user    => 'root',
+      environment => ["PATH=$normal_path:$root_path_addon","MAILTO=$cronemail"], # this is from site.pp
+      minute  => 31,
+  }
+  cron { "periodically update rump from Riccardo github and execute":  
       ensure      => present,
       command     => "$basepath/sbin/rump-update-and-execute.sh",
       user        => 'root',
       environment => ["PATH=$normal_path:$root_path_addon","MAILTO=$cronemail"], # this is from site.pp
-      minute      => [1,31],
+      minute      => [1,16,46],
       require     => File["$basepath/sbin/rump-update-and-execute.sh"],
   }
   # copied from http://projects.puppetlabs.com/projects/1/wiki/Cron_Patterns
