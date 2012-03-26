@@ -282,6 +282,7 @@ then source $roothome/.bashrc.riccardo ; fi\" \
   }
   file { "$basepath/sbin/rump-update-and-execute.sh":
     ensure  => present,
+    mode   => '0755',
     content => template('sauce/rump-update-and-execute.sh'),
     require => File["$basepath/sbin"];
   }
