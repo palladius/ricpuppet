@@ -18,7 +18,7 @@
 #     machine_description => 'optional description'
 #   }
 class sauce ($machine_description = 'Sorry, no info provided') {
-  $version = '1.2.02b'
+  $version = '1.2.03'
   $verbose = true
   $basepath = '/opt/riccardo'
   $basepath_parsley_dir = "$basepath/parsley"
@@ -28,6 +28,7 @@ class sauce ($machine_description = 'Sorry, no info provided') {
   $dropbox_sauce_dir = "$poweruser_home/Dropbox/tmp/sauce/"
   $flavour = 'in bianco'
   $history = '
+1.2.03 20120326 Minor changes. Huge bug fixed. Migrating cron job to file
 1.2.02 20120325 Added dropbox_sauce_dir
 1.2.01 20120325 cron also updates submodules.. (should..)
 1.1.04 20120325 Adding apache2, better facter and Mac support (wow!)
@@ -174,8 +175,8 @@ class sauce ($machine_description = 'Sorry, no info provided') {
   file { $sauce_skeleton_poweruser_dirs:
     ensure => 'directory',
     owner  => $poweruser_name,
-    group  => $poweruser_group,
-    mode   => '0755',
+    #group  => $poweruser_group, # should be automatical
+    #mode   => '0755',
     # otherwise normal users can't get in
   }
 
@@ -279,6 +280,11 @@ then source $roothome/.bashrc.riccardo ; fi\" \
     content => template('sauce/sauce.conf'),
     require => File["$basepath/etc"];
   }
+  file { "$basepath/sbin/rump-update-and-execute.sh":
+    ensure  => present,
+    content => template('sauce/rump-update-and-execute.sh'),
+    require => File["$basepath/sbin"];
+  }
 
   # Include the inject file...
   file { "$basepath/bashrc.inject":
@@ -323,13 +329,20 @@ then source $roothome/.bashrc.riccardo ; fi\" \
     fail("Sorry(whoami), this module requires you to be ROOT (not '$id'), dont use sudo. Be brave! :)")
   }
 
-
+  #cron { "hourly download for RUMP from Riccardo github and execute":  
+  #    ensure  => present,
+  #    command => "cd ~/git/puppet-rump && git pull origin master &&  git submodule foreach git pull origin master && rump go && touch $basepath/cron-rump-last-update.touch",
+  #    user    => 'root',
+  #    environment => ["PATH=$normal_path:$root_path_addon","MAILTO=$cronemail"], # this is from site.pp
+  #    minute  => 31,
+  #}
   cron { "hourly download for RUMP from Riccardo github and execute":  
-      ensure  => present,
-      command => "cd ~/git/puppet-rump && git pull origin master &&  git submodule foreach git pull origin master && rump go && touch $basepath/cron-rump-last-update.touch",
-      user    => 'root',
+      ensure      => present,
+      command     => "$basepath/sbin/rump-update-and-execute.sh",
+      user        => 'root',
       environment => ["PATH=$normal_path:$root_path_addon","MAILTO=$cronemail"], # this is from site.pp
-      minute  => 31,
+      minute      => [1,31],
+      require     => File[$basepath/sbin/rump-update-and-execute.sh],
   }
   # copied from http://projects.puppetlabs.com/projects/1/wiki/Cron_Patterns
   # cron { "puppet":
