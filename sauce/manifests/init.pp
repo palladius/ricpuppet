@@ -18,7 +18,9 @@
 #     machine_description => 'optional description'
 #   }
 class sauce ($machine_description_by_arg = 'Sorry, no info provided!!') {
-  $version = '1.2.04b'
+  include sauce::legacy   # remove legacy stuff
+  
+  $version = '1.2.05'
   $verbose = true
   $basepath = '/opt/palladius'
   $basepath_parsley_dir = "$basepath/parsley"
@@ -28,6 +30,7 @@ class sauce ($machine_description_by_arg = 'Sorry, no info provided!!') {
   $dropbox_sauce_dir = "$poweruser_home/Dropbox/tmp/sauce/" # pers stuff
   $flavour = 'in bianco'
   $history = '
+1.2.05 20120326 Adding legacy to remove old stuff :)
 1.2.04 20120326 Changed basedir to /opt/palladius/ and so dflt username, Cron cleanup
 1.2.03 20120326 Minor changes. Huge bug fixed. Migrating cron job to file
 1.2.02 20120325 Added dropbox_sauce_dir
@@ -290,7 +293,7 @@ then source $roothome/.bashrc.sauce ; fi\" \
   }
 
   # Include the inject file...
-  file { "$basepath/bashrc.inject":
+  file { "$basepath/tmp/bashrc.inject":
     ensure  => present,
     content => template('sauce/bashrc.inject'),
     require => File[$basepath];
@@ -298,10 +301,10 @@ then source $roothome/.bashrc.sauce ; fi\" \
 
   # catting for user Riccardo.
   # TODO make it modular for user XXXX'
-  exec {"cat '$basepath/bashrc.inject' >> ~riccardo/.bashrc":
+  exec {"cat '$basepath/tmp/bashrc.inject' >> ~riccardo/.bashrc":
     unless  => 'grep "bashrc.inject START" ~riccardo/.bashrc',
     path    => $normal_path,
-    require => File["$basepath/bashrc.inject"];
+    require => File["$basepath/tmp/bashrc.inject"];
   }
 
   # Symlinking our logs into /var/log/riccardo/
