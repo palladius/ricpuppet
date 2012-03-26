@@ -72,6 +72,7 @@ class sauce ($machine_description_by_arg = 'Sorry, no info provided!!') {
       'poweruser_simplegroup', # 'poweruser_grp',
     'nmap_installed', # TODO better
     'whoami', # just for testing
+    'richome', # ditto
   ]
 
   # sauce debian packages
