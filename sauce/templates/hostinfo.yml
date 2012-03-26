@@ -1,7 +1,6 @@
 <%= sauce_template_header %>
 # Host: <%= fqdn %>
 # OS:   <%= operatingsystem %> <%= operatingsystemrelease %>
-# Now:  <%= now %>
 #############################################################################
 Sauce stuff:
   Flavour: <%= flavour %>

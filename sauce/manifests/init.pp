@@ -18,7 +18,7 @@
 #     machine_description => 'optional description'
 #   }
 class sauce ($machine_description = 'Sorry, no info provided') {
-  $version = '1.2.03b'
+  $version = '1.2.03d'
   $verbose = true
   $basepath = '/opt/riccardo'
   $basepath_parsley_dir = "$basepath/parsley"
@@ -60,7 +60,8 @@ class sauce ($machine_description = 'Sorry, no info provided') {
   # Facts defined by me
   $facter_custom_facts = [
     'roothome',
-    'poweruser_group', 'poweruser_name', 'poweruser_home', 'poweruser_exists', 'poweruser_email', 
+    'poweruser_group', 'poweruser_name', 'poweruser_home', 
+      'poweruser_exists', 'poweruser_email',
       'poweruser_simplegroup', # 'poweruser_grp',
     'nmap_installed', 'whoami', # just for testing
   ]
@@ -239,7 +240,7 @@ class sauce ($machine_description = 'Sorry, no info provided') {
   file { "/var/www/hostinfo-$hostname.txt":
     ensure  => present,
     content => template('sauce/hostinfo.yml'),
-    require => File[$basepath],
+    require => [File[$basepath],Package['apache2']],
   }
 
   file { "$roothome/.bashrc.riccardo":
@@ -259,7 +260,7 @@ class sauce ($machine_description = 'Sorry, no info provided') {
     require => File[$basepath],
   }
 
-  file { "$dropbox_sauce_dir/hostinfo-$::fqdn.yml":
+  file { "$dropbox_sauce_dir/$::fqdn.yml":
     ensure  => present,
     owner   => $power_user,
     group   => $poweruser_group,
