@@ -92,7 +92,9 @@ class sauce ($machine_description_by_arg = 'Sorry, no info provided!!') {
   $mandatory_gems = [
     'xmpp4r-simple' ,   # Jabber notifications
     'ric',              # Self gratification :)
+    'puppet',           # Self gratification :)
     #sakura             # TODO implement
+    #rump               # not really needed yet.. :)
   ]
 
   # TODO use vcsrepo
@@ -128,6 +130,9 @@ class sauce ($machine_description_by_arg = 'Sorry, no info provided!!') {
         ensure => 'installed'
       }
     }
+    darwin: {
+      notify {"on Mac OS/X ('${::operatingsystem}') I should leverage the XCode, me thinks": }
+    }
     default: {
       notify {"sauce doesn't know how to apt-get install my debian packages for '${::operatingsystem}' OS! \
   Expect some packages NOT to be correctly installed": }
@@ -161,6 +166,7 @@ class sauce ($machine_description_by_arg = 'Sorry, no info provided!!') {
     "$basepath/tmp",
     "$basepath/var",
     "$basepath/var/log",
+    '/var/www',
   ]
 
   $sauce_skeleton_poweruser_dirs = [
@@ -244,7 +250,7 @@ class sauce ($machine_description_by_arg = 'Sorry, no info provided!!') {
   file { "/var/www/hostinfo-$hostname.txt":
     ensure  => present,
     content => template('sauce/hostinfo.yml'),
-    require => [File[$basepath],Package['apache2']],
+    require => [File[$basepath],File['/var/www']],
   }
 
   file { "$roothome/.bashrc.sauce":

@@ -1,7 +1,7 @@
 <%= sauce_template_header %>
 # Host: <%= fqdn %>
 # OS:   <%= operatingsystem %> <%= operatingsystemrelease %> 
-#  Ubu:   <%= lsbdistdescription %> (<%= lsbdistrelease %>)
+#  Ubu:   <%= lsbdistdescription rescue '-' %> (<%= lsbdistrelease rescue '-' %>)
 # Arch: <%= architecture %>
 # TZ:   <%= timezone %>
 # Desc: <%= machine_description %>
