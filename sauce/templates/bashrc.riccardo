@@ -15,8 +15,10 @@ export SAUCE_VERSION='<%= version %>'
 alias sauce_version='echo SAUCE VERSION: $SAUCE_VERSION'
 alias vanilla_version='echo Try instead: sauce_version'
 alias sauce_history='cat <%= basepath %>/HISTORY'
-alias hostinfo='cat <%= basepath %>/HOSTINFO.yml'    # I think this is taken?
-alias host_info='cat <%= basepath %>/HOSTINFO.yml'
+alias hostinfo='cat <%= basepath %>/hostinfo.yml'    # I think this is taken?
+alias host_info_sauce='cat <%= basepath %>/hostinfo.yml'
+alias hi='cat <%= basepath %>/hostinfo.yml'
+alias his='cat <%= basepath %>/hostinfo.yml'
 
 # Riccardo practical stuff
 alias vi.bashrc='vim ~/.bashrc'

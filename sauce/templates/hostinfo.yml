@@ -1,11 +1,13 @@
 <%= sauce_template_header %>
 # Host: <%= fqdn %>
-# OS:   <%= operatingsystem %> <%= operatingsystemrelease %>
+# OS:   <%= operatingsystem %> <%= operatingsystemrelease %> (<%= architecture %>)
+# TZ:   <%= timezone %>
+# Desc: <%= machine_description %>
 #############################################################################
 Sauce stuff:
   Flavour: <%= flavour %>
-  Installed Debian Packages: <%= mandatory_debian_packages.sort.join(', ') %>
-  Installed Ruby Gems: <%= mandatory_gems.sort.join(', ') %>
+  Debian Packages: <%= mandatory_debian_packages.sort.join(', ') %>
+  Ruby Gems: <%= mandatory_gems.sort.join(', ') %>
 Custom Facts:
   Generic: <%= sauce_custom_facts %>
   fun_facts:

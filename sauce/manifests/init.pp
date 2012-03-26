@@ -17,17 +17,18 @@
 #   class { 'sauce':
 #     machine_description => 'optional description'
 #   }
-class sauce ($machine_description = 'Sorry, no info provided') {
-  $version = '1.2.03d'
+class sauce ($machine_description_by_arg = 'Sorry, no info provided!!') {
+  $version = '1.2.04'
   $verbose = true
-  $basepath = '/opt/riccardo'
+  $basepath = '/opt/palladius'
   $basepath_parsley_dir = "$basepath/parsley"
   $root_path_addon = "$basepath/bin:$basepath/sbin:/var/lib/gems/1.8/bin/"
-  $normal_path     = '/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/sbin:/usr/local/bin'
+  $normal_path = '/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/sbin:/usr/local/bin'
   $user_path_addon = "$basepath/bin"
-  $dropbox_sauce_dir = "$poweruser_home/Dropbox/tmp/sauce/"
+  $dropbox_sauce_dir = "$poweruser_home/Dropbox/tmp/sauce/" # pers stuff
   $flavour = 'in bianco'
   $history = '
+1.2.04 20120326 Changed basedir to /opt/palladius/ and so dflt username, Cron cleanup
 1.2.03 20120326 Minor changes. Huge bug fixed. Migrating cron job to file
 1.2.02 20120325 Added dropbox_sauce_dir
 1.2.01 20120325 cron also updates submodules.. (should..)
@@ -103,11 +104,11 @@ class sauce ($machine_description = 'Sorry, no info provided') {
 #                 Change at your own risk
 #############################################################################"
 
-  #if (defined('machine_description')) {
-  #  $machine_description = "Dan is right: $machine_description"
-  #} else {
-  #  $machine_description = "UNDEFINED DESCRIPTION ($::machine_description)"
-  #}
+  if (defined('machine_description_by_arg')) {
+    $machine_description = "Dan is right: $machine_description"
+  } else {
+    $machine_description = "UNDEFINED DESCRIPTION ($::machine_description)"
+  }
 
   # guarantees these base packages are installed everywhere :)
   package {$mandatory_packages:
@@ -331,19 +332,12 @@ then source $roothome/.bashrc.riccardo ; fi\" \
     fail("Sorry(whoami), this module requires you to be ROOT (not '$id'), dont use sudo. Be brave! :)")
   }
 
-  cron { "hourly download for RUMP from Riccardo github and execute":  
-      ensure  => present,
-      command => "cd ~/git/puppet-rump && git pull origin master &&  git submodule foreach git pull origin master && rump go && touch $basepath/cron-rump-last-update.touch",
-      user    => 'root',
-      environment => ["PATH=$normal_path:$root_path_addon","MAILTO=$cronemail"], # this is from site.pp
-      minute  => 31,
-  }
   cron { "periodically update rump from Riccardo github and execute":  
       ensure      => present,
       command     => "$basepath/sbin/rump-update-and-execute.sh",
       user        => 'root',
       environment => ["PATH=$normal_path:$root_path_addon","MAILTO=$cronemail"], # this is from site.pp
-      minute      => [1,16,46],
+      minute      => [1,16,31,46],
       require     => File["$basepath/sbin/rump-update-and-execute.sh"],
   }
   # copied from http://projects.puppetlabs.com/projects/1/wiki/Cron_Patterns
