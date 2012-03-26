@@ -1,7 +1,12 @@
-
+# Defined type: 
 # copied from http://itand.me/using-puppet-to-manage-users-passwords-and-ss
-
-define add_user ( $email, $uid ) {
+#
+# manazza::add_user { rrunner:
+#   email    => "road.runner@acme.com",
+#   uid      => 5001
+# }
+#
+define manazza::add_user ( $email, $uid ) {
 
             $username = $title
 
@@ -33,12 +38,12 @@ define add_user ( $email, $uid ) {
                     require => file["/home/$username/"]
             }
 
-            exec { "/narnia/tools/setuserpassword.sh $username":
-                    path            => "/bin:/usr/bin",
-                    refreshonly     => true,
-                    subscribe       => user[$username],
-                    unless          => "cat /etc/shadow | grep $username| cut -f 2 -d : | grep -v '!'"
-            }
+            # exec { "/narnia/tools/setuserpassword.sh $username":
+            #         path            => "/bin:/usr/bin",
+            #         refreshonly     => true,
+            #         subscribe       => user[$username],
+            #         unless          => "cat /etc/shadow | grep $username| cut -f 2 -d : | grep -v '!'"
+            # }
 
             # now make sure that the ssh key authorized files is around
             file { "/home/$username/.ssh/authorized_keys":

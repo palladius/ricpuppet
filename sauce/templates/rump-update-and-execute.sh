@@ -1,6 +1,6 @@
 #!/bin/sh
 
-VER=0.9a
+VER=0.9b
 
 cd ~/git/puppet-rump && 
 	git pull origin master &&  
