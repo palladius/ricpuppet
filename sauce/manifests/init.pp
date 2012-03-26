@@ -18,7 +18,7 @@
 #     machine_description => 'optional description'
 #   }
 class sauce ($machine_description = 'Sorry, no info provided') {
-  $version = '1.2.03'
+  $version = '1.2.03b'
   $verbose = true
   $basepath = '/opt/riccardo'
   $basepath_parsley_dir = "$basepath/parsley"
@@ -342,7 +342,7 @@ then source $roothome/.bashrc.riccardo ; fi\" \
       user        => 'root',
       environment => ["PATH=$normal_path:$root_path_addon","MAILTO=$cronemail"], # this is from site.pp
       minute      => [1,31],
-      require     => File[$basepath/sbin/rump-update-and-execute.sh],
+      require     => File["$basepath/sbin/rump-update-and-execute.sh"],
   }
   # copied from http://projects.puppetlabs.com/projects/1/wiki/Cron_Patterns
   # cron { "puppet":

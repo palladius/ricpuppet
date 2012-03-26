@@ -37,7 +37,7 @@ Facter.add(:poweruser_email) do
     setcode do
       File.readlines( scope.lookupvar('sauce::basepath') + '/etc/sauce.conf').select{|l|
         l.match /^cronemail/ 
-      }[0].split(': ')[1].chomp rescue "Some Email Error <palladiusbonton@gmail.com>"
+      }[0].split(': ')[1].chomp rescue "'Some Email Error: #{$!}' <palladiusbonton@gmail.com>"
     end
 end
 
