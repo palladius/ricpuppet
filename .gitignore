@@ -1,4 +1,5 @@
 *.swp
 .project
+.DS_Store
 *~
 rake_test.*
