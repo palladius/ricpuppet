@@ -9,4 +9,4 @@ cd ~/git/puppet-rump &&
 	touch <%= basepath %>/cron-rump-last-update-v$VER.touch
 
 # If it exists :)
-touch ~riccardo/Dropbox/tmp/sauce/cron-rump-last-update-v$VER.touch
+touch <%= poweruser_home %>/Dropbox/tmp/sauce/$hostname-cron-rump-last-update-v$VER.touch
