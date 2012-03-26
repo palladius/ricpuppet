@@ -62,6 +62,7 @@ class sauce ($machine_description_by_arg = 'Sorry, no info provided!!') {
     'architecture','uniqueid','productname'
   ]
 
+  $library_user_home = get_home($poweruser_name)  # test ruby library
   # Facts defined by me
   $facter_custom_facts = [
     'roothome',
@@ -73,6 +74,7 @@ class sauce ($machine_description_by_arg = 'Sorry, no info provided!!') {
     'nmap_installed', # TODO better
     'whoami', # just for testing
     'richome', # ditto
+    'library_user_home'
   ]
 
   # sauce debian packages
