@@ -17,5 +17,5 @@ if [ -d "<%= poweruser_home %>/Dropbox/tmp/sauce/" ]; then
   rm "<%= poweruser_home %>/Dropbox/tmp/sauce/<%= hostname %>-cron-rump-last-update-v*.touch"
   rm -f "<%= poweruser_home %>/Dropbox/tmp/sauce/-cron-rump*.touch"
   touch "$DROPBOX_FILE"
-  chown -R <%=poweruser_nam e%> "$DROPBOX_DIR"
+  chown -R <%= poweruser_name %> "$DROPBOX_DIR"
 fi
