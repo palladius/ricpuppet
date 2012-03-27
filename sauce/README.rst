@@ -1,16 +1,15 @@
-
-Vanilla
-=======
+Sauce
+=====
 
 This is the sauce package.
 
-*All* Dell machines, whether DEV or other, should implement this class.
+*All* my machines should implement this class.
 
 
 Notes
 -----
 
-Try this:
+Try this to render this lovely README:
 
     /usr/local/bin/rst2html.py README.rst 
 
