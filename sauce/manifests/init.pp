@@ -21,13 +21,14 @@ class sauce () {
   $version = '1.2.08a'
   $verbose = true
   $basepath = '/opt/palladius'
+  $default_poweruser_name  = 'riccardo'
+  $default_poweruser_email = "root@$::fqdn"
   $basepath_parsley_dir = "$basepath/parsley"
   $root_path_addon = "$basepath/bin:$basepath/sbin:/var/lib/gems/1.8/bin/"
   $normal_path = '/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/sbin:/usr/local/bin'
   $user_path_addon = "$basepath/bin"
   $dropbox_sauce_dir = "$poweruser_home/Dropbox/tmp/sauce/" # pers stuff
   $flavour = 'in bianco'
-  $default_poweruser_name = 'inbianco'
   $history = '
 1.2.08 20120327 Changed License to Creative Commons
 1.2.07 20120327 Minor adds
@@ -119,6 +120,11 @@ class sauce () {
     $machine_description = $cluster_machine_description
   } else {
     $machine_description = "UNDEFINED DESCRIPTION. Please define 'cluster_machine_description' within the cluster."
+  }
+  if (defined('cluster_poweruser_email')) {
+    $poweruser_email = $cluster_poweruser_email
+  } else {
+    $poweruser_email = $default_poweruser_email
   }
 
 $cluster_poweruser_name  = 'riccardo'

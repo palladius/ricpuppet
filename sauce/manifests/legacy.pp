@@ -27,6 +27,9 @@ class sauce::legacy () {
  file { "$dropbox_sauce_dir/hostinfo-$::fqdn.yml":
     ensure  => absent,
  }
+ file { "$dropbox_sauce_dir/-*.yml":
+    ensure  => absent,
+ }
  file { "/opt/riccardo/":
     ensure  => absent,
  }
