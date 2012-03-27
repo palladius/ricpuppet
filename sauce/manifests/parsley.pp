@@ -10,9 +10,3 @@ define sauce::parsley ($content, $diary = 'default') {
   }
 
 }
-
-#node 'myserver.domain.com' {
-#  sauce::parsley { 'mynote':
-#    content => "Content of the note"
-#  }
-#}

@@ -18,7 +18,7 @@
 class sauce () {
   include sauce::legacy   # remove legacy stuff
   
-  $version = '1.2.06'
+  $version = '1.2.07'
   $verbose = true
   $basepath = '/opt/palladius'
   $basepath_parsley_dir = "$basepath/parsley"
@@ -29,6 +29,7 @@ class sauce () {
   $flavour = 'in bianco'
   $default_poweruser_name = 'inbianco'
   $history = '
+1.2.07 20120327 Minor adds
 1.2.06 20120326 My first working function
 1.2.05 20120326 Adding legacy to remove old stuff :)
 1.2.04 20120326 Changed basedir to /opt/palladius/ and so dflt username, Cron cleanup
@@ -58,7 +59,8 @@ class sauce () {
     'physicalprocessorcount',
     'virtual','machine_description',
     'operatingsystem','operatingsystemrelease',
-    'architecture','uniqueid','productname'
+    'architecture','uniqueid','productname',
+    'memorysize', 'processor', 'processorcount', # RAM e uP
   ]
 
   $library_user_home = get_home  # test ruby library
@@ -79,20 +81,17 @@ class sauce () {
   # sauce debian packages
   $mandatory_debian_packages = [
     'bash-completion' ,              # how can u live without it?
-    'gitk',            # ditto (git is called git-core on 10.04 so maybe this)
+    'gitk',                          # I need git at least for rump
     'libnotify-bin',                 # notify-send for sending messages.
-    # I know, it would be better to have them installed from source but....
-    # hey... this is puppet!
-    'rubygems',
+    'rubygems',                      # I know, it would be better to have them installed from source but.. hey... this is puppet!
     'links', 'lynx', 'wget',         # For web
-    #'libxmpp4r-ruby',                # Jabber library for my notify scripts
     'ruby-full', 'build-essential',  # Suggested by DHH Ruby Wiki
     'fping','nmap','traceroute',     # Networking basics, wtf! :)
-    # For some bug on missing LC_TYPE..
-    'locales' ,
-    'language-pack-en',
+    'locales' ,          # For some bug on missing LC_TYPE..
+    'language-pack-en',  # For some bug on missing LC_TYPE..
     'sendmail', # to send emails
     'apache2',  # to expose my info :)
+    'puppet',   # Some systems give error otherwise (!!)
   ]
 
   $mandatory_gems = [
