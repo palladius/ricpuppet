@@ -18,7 +18,7 @@
 class sauce () {
   include sauce::legacy   # remove legacy stuff
   
-  $version = '1.2.08'
+  $version = '1.2.08a'
   $verbose = true
   $basepath = '/opt/palladius'
   $basepath_parsley_dir = "$basepath/parsley"
@@ -92,7 +92,7 @@ class sauce () {
     'language-pack-en',  # For some bug on missing LC_TYPE..
     'sendmail', # to send emails
     'apache2',  # to expose my info :)
-    'puppet',   # Some systems give error otherwise (!!)
+    #'puppet',   # NO! Already required otherwise!
   ]
 
   $mandatory_gems = [
