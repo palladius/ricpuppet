@@ -194,6 +194,13 @@ $cluster_poweruser_name  = 'riccardo'
     $dropbox_sauce_dir,
   ]
 
+  # my first symlink
+  file {"/etc/palladius/":
+    ensure => link,
+    target  => "$basepath/etc",
+    require => File["$basepath/etc"],
+  }
+
   file { $sauce_skeleton_root_dirs:
     ensure => 'directory',
     owner  => 'root',
