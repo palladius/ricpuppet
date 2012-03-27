@@ -18,7 +18,7 @@
 class sauce () {
   include sauce::legacy   # remove legacy stuff
   
-  $version = '1.2.07'
+  $version = '1.2.08'
   $verbose = true
   $basepath = '/opt/palladius'
   $basepath_parsley_dir = "$basepath/parsley"
@@ -29,6 +29,7 @@ class sauce () {
   $flavour = 'in bianco'
   $default_poweruser_name = 'inbianco'
   $history = '
+1.2.08 20120327 Changed License to Creative Commons
 1.2.07 20120327 Minor adds
 1.2.06 20120326 My first working function
 1.2.05 20120326 Adding legacy to remove old stuff :)
