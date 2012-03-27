@@ -18,7 +18,7 @@
 class sauce () {
   include sauce::legacy   # remove legacy stuff
   
-  $version = '1.2.08a'
+  $version = '1.2.09'
   $verbose = true
   $basepath = '/opt/palladius'
   $default_poweruser_name  = 'riccardo'
@@ -30,6 +30,7 @@ class sauce () {
   $dropbox_sauce_dir = "$poweruser_home/Dropbox/tmp/sauce/" # pers stuff
   $flavour = 'in bianco'
   $history = '
+1.2.09 20120327 Changed the updater script. Better dropbox. Symlink to /etc/
 1.2.08 20120327 Changed License to Creative Commons
 1.2.07 20120327 Minor adds
 1.2.06 20120326 My first working function
@@ -296,9 +297,9 @@ $cluster_poweruser_name  = 'riccardo'
     require => File[$basepath],
   }
 
-  file { "$dropbox_sauce_dir/$::fqdn.yml":
+  file { "$dropbox_sauce_dir/${::fqdn}-v${sauce::version}.yml":
     ensure  => present,
-    owner   => $power_user,
+    owner   => $poweruser_name,
     group   => $poweruser_group,
     content => template("sauce/hostinfo.yml"),
     require => File[$dropbox_sauce_dir],

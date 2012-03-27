@@ -1,10 +1,10 @@
 #!/bin/sh
 
-VER=1.1b
+VER=1.3
 
-# touchfile
-mkdir -p "<%= poweruser_home %>/Dropbox/tmp/sauce/cron-rump/"
-DROPBOX_FILE="<%= poweruser_home %>/Dropbox/tmp/sauce/cron-rump/<%= fqdn %>-v$VER.touch"
+DROPBOX_DIR="<%= poweruser_home %>/Dropbox/tmp/sauce/cron-rump/"
+mkdir -p "$DROPBOX_DIR"
+DROPBOX_FILE="$DROPBOX_DIR/<%= fqdn %>-v$VER.touch"
 
 cd ~/git/puppet-rump && 
 	git pull origin master &&  
@@ -15,6 +15,7 @@ cd ~/git/puppet-rump &&
 # If it exists I create a touch :)
 if [ -d "<%= poweruser_home %>/Dropbox/tmp/sauce/" ]; then
   rm "<%= poweruser_home %>/Dropbox/tmp/sauce/<%= hostname %>-cron-rump-last-update-v*.touch"
+  rm -f "<%= poweruser_home %>/Dropbox/tmp/sauce/-cron-rump*.touch"
   touch "$DROPBOX_FILE"
-  chmod <%=poweruser_name%> "$DROPBOX_FILE"
+  chown -R <%=poweruser_nam e%> "$DROPBOX_DIR"
 fi
