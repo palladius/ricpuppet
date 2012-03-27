@@ -15,15 +15,11 @@
 
 class dropbox (user = 'riccardo') {
 
-  #package { ['etckeeper','git']: 
-  #  ensure  => 'installed',
-  #}
+  package { ['nautilus-dropbox']: 
+    ensure  => 'installed',
+  }
 
-  #file { '/my/dir':
-  #  ensure => 'directory',
-  #  owner  => 'root',
-  #  mode   => '0755',
-  #}
+  # apt-get -f install dopo?!?
 
   ## TEMPLATES
   file { "/etc/apt/sources.list.d/dropbox.list":
