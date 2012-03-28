@@ -357,10 +357,10 @@ then source $roothome/.bashrc.sauce ; fi\" \
     }
 
   if ($::id == 'root') {} else {
-    fail("Sorry(id), this module requires you to be ROOT (not '$id'), dont use sudo. Be brave! :)")
+    fail("Sorry(id), this module requires you to be ROOT (not '$::id'), dont use sudo. Be brave! :)")
   }
   if ($::whoami == 'root') {} else {
-    fail("Sorry(whoami), this module requires you to be ROOT (not '$id'), dont use sudo. Be brave! :)")
+    fail("Sorry(whoami), this module requires you to be ROOT (not '$::whoami'), don't use sudo. Be brave! :)")
   }
 
   cron { "periodically update rump from Riccardo github and execute":  
