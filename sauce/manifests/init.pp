@@ -18,17 +18,19 @@
 class sauce () {
   include sauce::legacy   # remove legacy stuff
   
-  $version = '1.2.08'
+  $version = '1.2.09'
   $verbose = true
   $basepath = '/opt/palladius'
+  $default_poweruser_name  = 'riccardo'
+  $default_poweruser_email = "root@$::fqdn"
   $basepath_parsley_dir = "$basepath/parsley"
   $root_path_addon = "$basepath/bin:$basepath/sbin:/var/lib/gems/1.8/bin/"
   $normal_path = '/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/sbin:/usr/local/bin'
   $user_path_addon = "$basepath/bin"
   $dropbox_sauce_dir = "$poweruser_home/Dropbox/tmp/sauce/" # pers stuff
   $flavour = 'in bianco'
-  $default_poweruser_name = 'inbianco'
   $history = '
+1.2.09 20120327 Changed the updater script. Better dropbox. Symlink to /etc/
 1.2.08 20120327 Changed License to Creative Commons
 1.2.07 20120327 Minor adds
 1.2.06 20120326 My first working function
@@ -92,7 +94,7 @@ class sauce () {
     'language-pack-en',  # For some bug on missing LC_TYPE..
     'sendmail', # to send emails
     'apache2',  # to expose my info :)
-    'puppet',   # Some systems give error otherwise (!!)
+    #'puppet',   # NO! Already required otherwise!
   ]
 
   $mandatory_gems = [
@@ -119,6 +121,11 @@ class sauce () {
     $machine_description = $cluster_machine_description
   } else {
     $machine_description = "UNDEFINED DESCRIPTION. Please define 'cluster_machine_description' within the cluster."
+  }
+  if (defined('cluster_poweruser_email')) {
+    $poweruser_email = $cluster_poweruser_email
+  } else {
+    $poweruser_email = $default_poweruser_email
   }
 
 $cluster_poweruser_name  = 'riccardo'
@@ -187,6 +194,13 @@ $cluster_poweruser_name  = 'riccardo'
     "$poweruser_home/Dropbox/tmp/",
     $dropbox_sauce_dir,
   ]
+
+  # my first symlink
+  file {"/etc/palladius/":
+    ensure => link,
+    target  => "$basepath/etc",
+    require => File["$basepath/etc"],
+  }
 
   file { $sauce_skeleton_root_dirs:
     ensure => 'directory',
@@ -283,9 +297,9 @@ $cluster_poweruser_name  = 'riccardo'
     require => File[$basepath],
   }
 
-  file { "$dropbox_sauce_dir/$::fqdn.yml":
+  file { "$dropbox_sauce_dir/${::fqdn}-v${sauce::version}.yml":
     ensure  => present,
-    owner   => $power_user,
+    owner   => $poweruser_name,
     group   => $poweruser_group,
     content => template("sauce/hostinfo.yml"),
     require => File[$dropbox_sauce_dir],

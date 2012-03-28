@@ -32,14 +32,6 @@ Facter.add(:poweruser_exists) do
     end
 end
 
-Facter.add(:poweruser_email) do
-    setcode do
-      File.readlines( scope.lookupvar('sauce::basepath') + '/etc/sauce.conf').select{|l|
-        l.match /^cronemail/ 
-      }[0].split(': ')[1].chomp rescue "'Some Email Error: #{$!}' <palladiusbonton@gmail.com>"
-    end
-end
-
 Facter.add(:poweruser_group) do
   setcode do
     username = Facter.value('poweruser_name_facter')
