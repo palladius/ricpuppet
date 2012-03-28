@@ -25,6 +25,6 @@ end
 
 Facter.add(:whoami) do
   setcode do
-    Facter::Util::Resolution.exec('whoami').chomp
+    Facter::Util::Resolution.exec('/usr/bin/whoami').chomp rescue "whoami_error('#{$!}')"
   end
 end
