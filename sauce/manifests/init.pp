@@ -63,6 +63,7 @@ class sauce () {
     'virtual','machine_description',
     'operatingsystem','operatingsystemrelease',
     'architecture','uniqueid','productname',
+    'sshrsakey', # big but interesting :)
     'memorysize', 'processor', 'processorcount', # RAM e uP
   ]
 
