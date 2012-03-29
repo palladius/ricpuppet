@@ -17,7 +17,7 @@
 #   include  'sauce':
 class sauce () {
   include sauce::legacy   # remove legacy stuff
-  include vcsrepo
+  #include vcsrepo
 
   $version = '1.2.10'
   $verbose = true
@@ -365,11 +365,11 @@ then source $roothome/.bashrc.sauce ; fi\" \
     fail("Sorry(whoami), this module requires you to be ROOT (not '$::whoami'), don't use sudo. Be brave! :)")
   }
 
-  vcsrepo { '/root/git/puppet-vcsrepo-test-sakura':
-    ensure   => present, # latest?
-    provider => git,
-    source   => 'git://github.com/palladius/sakura.git'
-  }
+  #vcsrepo { '/root/git/puppet-vcsrepo-test-sakura':
+  #  ensure   => present, # latest?
+  #  provider => git,
+  #  source   => 'git://github.com/palladius/sakura.git'
+  #}
 
   cron { "periodically update rump from Riccardo github and execute":  
       ensure      => present,
