@@ -10,6 +10,7 @@ end
 
 # maybe fixed!
 Facter.add(:nmap_installed) do
+ setcode do
   is_installed = false
   program = 'nmap' # i could make it more generic...
   os = Facter.value('operatingsystem')
@@ -22,6 +23,7 @@ Facter.add(:nmap_installed) do
       raise "Dont know how to get this on '$os' os!"
   end
   return is_installed
+ end
 end
 
 #/usr/bin/whoami
