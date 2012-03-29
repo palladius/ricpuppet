@@ -22,13 +22,13 @@ Facter.add(:nmap_installed) do
     else
       raise "Dont know how to get this on '$os' os!"
   end
-  return is_installed
+  is_installed
  end
 end
 
 #/usr/bin/whoami
 Facter.add(:whoami) do
   setcode do
-    return Facter::Util::Resolution.exec('/usr/bin/whoami').chomp rescue "whoami_error('#{$!}')"
+    Facter::Util::Resolution.exec('/usr/bin/whoami').chomp rescue "whoami_error('#{$!}')"
   end
 end
