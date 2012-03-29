@@ -17,8 +17,9 @@
 #   include  'sauce':
 class sauce () {
   include sauce::legacy   # remove legacy stuff
-  
-  $version = '1.2.09'
+  include vcsrepo
+
+  $version = '1.2.10'
   $verbose = true
   $basepath = '/opt/palladius'
   $default_poweruser_name  = 'riccardo'
@@ -30,6 +31,7 @@ class sauce () {
   $dropbox_sauce_dir = "$poweruser_home/Dropbox/tmp/sauce/" # pers stuff
   $flavour = 'in bianco'
   $history = '
+1.2.10 20120329 Added VcsRepo for Sakura
 1.2.09 20120327 Changed the updater script. Better dropbox. Symlink to /etc/
 1.2.08 20120327 Changed License to Creative Commons
 1.2.07 20120327 Minor adds
@@ -361,6 +363,12 @@ then source $roothome/.bashrc.sauce ; fi\" \
   }
   if ($::whoami == 'root') {} else {
     fail("Sorry(whoami), this module requires you to be ROOT (not '$::whoami'), don't use sudo. Be brave! :)")
+  }
+
+  vcsrepo { '/root/git/puppet-vcsrepo-test-sakura':
+    ensure   => present, # latest?
+    provider => git,
+    source   => 'git://github.com/palladius/sakura.git'
   }
 
   cron { "periodically update rump from Riccardo github and execute":  

@@ -19,7 +19,7 @@ define manazza::add_user ( $email, $uid ) {
 
             group { $username:
                     gid     => $uid,
-                    require => user[$username]
+                    require => User[$username]
             }
 
             file { "/home/$username/":
@@ -27,7 +27,7 @@ define manazza::add_user ( $email, $uid ) {
                     owner   => $username,
                     group   => $username,
                     mode    => 750,
-                    require => [ user[$username], group[$username] ]
+                    require => [ User[$username], Group[$username] ]
             }
 
             file { "/home/$username/.ssh":
@@ -35,7 +35,7 @@ define manazza::add_user ( $email, $uid ) {
                     owner   => $username,
                     group   => $username,
                     mode    => 700,
-                    require => file["/home/$username/"]
+                    require => File["/home/$username/"]
             }
 
             # exec { "/narnia/tools/setuserpassword.sh $username":
@@ -51,6 +51,6 @@ define manazza::add_user ( $email, $uid ) {
                     owner   => $username,
                     group   => $username,
                     mode    => 600,
-                    require => file["/home/$username/"]
+                    require => File["/home/$username/"]
             }
     }
