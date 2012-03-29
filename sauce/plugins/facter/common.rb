@@ -11,6 +11,7 @@ end
 # maybe fixed!
 Facter.add(:nmap_installed) do
   is_installed = false
+  program = 'nmap' # i could make it more generic...
   os = Facter.value('operatingsystem')
   case os
     when "RedHat", "CentOS", "SuSE", "Fedora"
@@ -23,8 +24,9 @@ Facter.add(:nmap_installed) do
   return is_installed
 end
 
+#/usr/bin/whoami
 Facter.add(:whoami) do
   setcode do
-    Facter::Util::Resolution.exec('/usr/bin/whoami').chomp rescue "whoami_error('#{$!}')"
+    return Facter::Util::Resolution.exec('/usr/bin/whoami').chomp rescue "whoami_error('#{$!}')"
   end
 end
