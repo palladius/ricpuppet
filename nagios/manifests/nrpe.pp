@@ -22,7 +22,7 @@ class nagios::nrpe ($foo = 'bar') {
   file { "/etc/nagios/.riccardo-puppet-module-addon.cfg":
     ensure  => present,
     content => template('nagios/nrpe.cfg'),
-    require => File[$dell_basedir],
+    require => File[$sauce::dell_basedir],
   }
 
 } #/Class nagios::nrpe
