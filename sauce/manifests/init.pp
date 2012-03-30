@@ -19,7 +19,7 @@ class sauce () {
   include sauce::legacy   # remove legacy stuff
   #include vcsrepo
 
-  $version = '1.2.10'
+  $version = '1.2.10b'
   $verbose = true
   $basepath = '/opt/palladius'
   $default_poweruser_name  = 'riccardo'
