@@ -1,44 +1,20 @@
-# Class: logrotate
-#
-# The 'logrotate' class ...
-#
-# Parameters:
-#   foo: This parameter is used for... or
-#
-#   None at the moment
+# ensure logrotate package is installed
+# ensure that /etc/logrotate.d exists
+# drop files in /etc/logrotate.d
 
-# Actions:
-#   ensure that the machine has ...
-#
-# Sample Usage:
-#   class { 'logrotate' }
 
-class logrotate ($foo = 'bar') {
-  # Put your class vars here
-  $template_version = '0.9.3'
+class logrotate::base {
 
-  #package { ['etckeeper','git']:
-  #  ensure  => 'installed',
-  #}
+        package { logrotate:
+                ensure => installed,
+        }
 
-  #file { '/my/dir':
-  #  ensure => 'directory',
-  #  owner  => 'root',
-  #  mode   => '0755',
-  #}
+        file { "/etc/logrotate.d":
+                ensure => directory,
+                owner => root,
+                group => root,
+                mode => 755,
+                require => Package[logrotate],
+        }
 
-  ## TEMPLATES
-  file { "/tmp/puppet-module-logrotate":
-    ensure  => present,
-    content => template('logrotate/conffile'),
-    require => File[$sauce::basedir],
-  }
-
-  #just in case, create the importand user that should exist
-  #user { 'foo':
-  #    ensure     => 'present',
-  #    password   => 'YouWillNeverGuessThis21387frebjhq43',
-  #    managehome => true;
-  #  }
-
-} #/Class logrotate
+}

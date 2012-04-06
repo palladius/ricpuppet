@@ -1,6 +1,0 @@
-####################################################################
-# This is a test conffile for Puppet module '<%= puppet_module %>'.
-####################################################################
-
-# Let's try to put some module's variable here
-puppet_var = \< \%= template_version \% \>

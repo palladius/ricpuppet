@@ -19,7 +19,7 @@ class sauce () {
   include sauce::legacy   # remove legacy stuff
   #include vcsrepo
 
-  $version = '1.2.10'
+  $version = '1.2.12'
   $verbose = true
   $basepath = '/opt/palladius'
   $default_poweruser_name  = 'riccardo'
@@ -31,6 +31,8 @@ class sauce () {
   $dropbox_sauce_dir = "$poweruser_home/Dropbox/tmp/sauce/" # pers stuff
   $flavour = 'in bianco'
   $history = '
+1.2.12 20120403 nothing really, just restored old file after a few days missing!
+1.2.11 20120330 updated cron dropbox cleanup
 1.2.10 20120329 Added VcsRepo for Sakura
 1.2.09 20120327 Changed the updater script. Better dropbox. Symlink to /etc/
 1.2.08 20120327 Changed License to Creative Commons
