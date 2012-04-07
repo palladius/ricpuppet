@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+        <key>EnvironmentVariables</key>
+        <dict>
+                <key>PATH</key>
+                <string>/sbin:/usr/sbin:/bin:/usr/bin</string>
+                <key>RUBYLIB</key>
+                <string>/usr/lib/ruby/site_ruby/1.8/</string>
+        </dict>
+        <key>Label</key>
+        <string>com.reductivelabs.puppetmaster</string>
+        <key>OnDemand</key>
+        <false/>
+        <key>ProgramArguments</key>
+        <array>
+                <string>/usr/sbin/puppetmasterd</string>
+                <string>--verbose</string>
+                <string>--no-daemonize</string>
+        </array>
+        <key>RunAtLoad</key>
+        <true/>
+        <key>ServiceDescription</key>
+        <string>Puppetmaster Daemon</string>
+        <key>ServiceIPC</key>
+        <false/>
+        <key>StandardErrorPath</key>
+        <string>/var/puppet/log/puppetmaster.err</string>
+        <key>StandardOutPath</key>
+        <string>/var/puppet/log/puppetmaster.out</string>
+</dict>
+</plist>
