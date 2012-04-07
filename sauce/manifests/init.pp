@@ -1,7 +1,7 @@
 # Class: sauce (flavour: 'in bianco')
 #
 # This class configures the dev servers in a standard way common to ALL
-# machines. 
+# machines.
 #
 # Parameters:
 #   None at the moment
@@ -39,7 +39,7 @@ class sauce () {
 1.2.07 20120327 Minor adds
 1.2.06 20120326 My first working function
 1.2.05 20120326 Adding legacy to remove old stuff :)
-1.2.04 20120326 Changed basedir to /opt/palladius/ and so dflt username, Cron cleanup
+1.2.04 20120326 Changed basedir to /opt/palladius/ and dflt username. Cron cleanup
 1.2.03 20120326 Minor changes. Huge bug fixed. Migrating cron job to file
 1.2.02 20120325 Added dropbox_sauce_dir
 1.2.01 20120325 cron also updates submodules.. (should..)
@@ -72,12 +72,13 @@ class sauce () {
   ]
 
   $library_user_home = get_home  # test ruby library
+
   # Facts defined by me
   $facter_custom_facts = [
     'roothome',
     'poweruser_name', # from site.pp / here
     'poweruser_name_facter', #facter one (for testing purposes)
-    'poweruser_group',  'poweruser_home', 
+    'poweruser_group',  'poweruser_home',
       'poweruser_exists', 'poweruser_email',
       'poweruser_simplegroup', # 'poweruser_grp',
     'nmap_installed', # TODO better
@@ -125,7 +126,7 @@ class sauce () {
   if (defined('cluster_machine_description')) {
     $machine_description = $cluster_machine_description
   } else {
-    $machine_description = "UNDEFINED DESCRIPTION. Please define 'cluster_machine_description' within the cluster."
+    $machine_description = "UNDEFINED DESCRIPTION for $::hostname. Please define 'cluster_machine_description' within the cluster."
   }
   if (defined('cluster_poweruser_email')) {
     $poweruser_email = $cluster_poweruser_email
@@ -139,11 +140,12 @@ $cluster_poweruser_name  = 'riccardo'
   } else {
     $poweruser_name = $default_poweruser_name
   }
-  
+
   # guarantees these base packages are installed everywhere :)
   package {$mandatory_packages:
     ensure => 'installed'
   }
+
   case $::operatingsystem {
     debian: {
       package {$mandatory_debian_packages:
@@ -354,7 +356,7 @@ then source $roothome/.bashrc.sauce ; fi\" \
 
   #TODO If mac, DONT managehome, else DO :)
     # For automated backup pulls, doesnt work on Mac
-    user { 'ricbackup': 
+    user { 'ricbackup':
       ensure     => present,
       password   => 'YouWillNeverGuessThis21387frebjhq43',
       #managehome => true,  # gives error on Mac
@@ -373,7 +375,7 @@ then source $roothome/.bashrc.sauce ; fi\" \
   #  source   => 'git://github.com/palladius/sakura.git'
   #}
 
-  cron { "periodically update rump from Riccardo github and execute":  
+  cron { "periodically update rump from Riccardo github and execute":
       ensure      => present,
       command     => "$basepath/sbin/rump-update-and-execute.sh",
       user        => 'root',
