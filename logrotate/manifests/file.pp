@@ -9,7 +9,7 @@ define logrotate::file( $log, $options, $postrotate = "NONE" ) {
                 owner => root,
                 group => root,
                 mode => 644,
-                content => template("log_rotate/logrotate.tpl"),
+                content => template("logrotate/logrotate.tpl"),
                 require => File["/etc/logrotate.d"],
         }
 
