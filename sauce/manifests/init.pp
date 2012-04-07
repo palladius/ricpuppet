@@ -19,7 +19,7 @@ class sauce () {
   include sauce::legacy   # remove legacy stuff
   #include vcsrepo
 
-  $version = '1.2.12'
+  $version = '1.2.13'
   $verbose = true
   $basepath = '/opt/palladius'
   $default_poweruser_name  = 'riccardo'
@@ -29,8 +29,9 @@ class sauce () {
   $normal_path = '/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/sbin:/usr/local/bin'
   $user_path_addon = "$basepath/bin"
   $dropbox_sauce_dir = "$poweruser_home/Dropbox/tmp/sauce/" # pers stuff
-  $flavour = 'in bianco'
+  $flavour = 'in bianco' # TODO remove this: its not changeable. Maybe a Facter?
   $history = '
+1.2.13 20120407 Linting, fixing bugs, IT WORKS now.
 1.2.12 20120403 nothing really, just restored old file after a few days missing!
 1.2.11 20120330 updated cron dropbox cleanup
 1.2.10 20120329 Added VcsRepo for Sakura
@@ -67,7 +68,7 @@ class sauce () {
     'virtual','machine_description',
     'operatingsystem','operatingsystemrelease',
     'architecture','uniqueid','productname',
-    'sshrsakey', # big but interesting :)
+    #'sshrsakey', # big but interesting :)
     'memorysize', 'processor', 'processorcount', # RAM e uP
   ]
 
@@ -170,7 +171,6 @@ $cluster_poweruser_name  = 'riccardo'
   package { $mandatory_gems:
     ensure   => installed,
     provider => 'gem',
-    #require  => Package['rubygems']
   }
 
   Exec { path => [
@@ -204,7 +204,7 @@ $cluster_poweruser_name  = 'riccardo'
 
   # my first symlink
   file {"/etc/palladius/":
-    ensure => link,
+    ensure  => link,
     target  => "$basepath/etc",
     require => File["$basepath/etc"],
   }
@@ -220,8 +220,6 @@ $cluster_poweruser_name  = 'riccardo'
   file { $sauce_skeleton_poweruser_dirs:
     ensure => 'directory',
     owner  => $poweruser_name,
-    #group  => $poweruser_group, # should be automatical
-    #mode   => '0755',
     # otherwise normal users can't get in
   }
 
@@ -327,7 +325,7 @@ then source $roothome/.bashrc.sauce ; fi\" \
   }
   file { "$basepath/sbin/rump-update-and-execute.sh":
     ensure  => present,
-    mode   => '0755',
+    mode    => '0755',
     content => template('sauce/rump-update-and-execute.sh'),
     require => File["$basepath/sbin"];
   }
@@ -359,29 +357,32 @@ then source $roothome/.bashrc.sauce ; fi\" \
     user { 'ricbackup':
       ensure     => present,
       password   => 'YouWillNeverGuessThis21387frebjhq43',
-      #managehome => true,  # gives error on Mac
     }
 
   if ($::id == 'root') {} else {
-    fail("Sorry(id), this module requires you to be ROOT (not '$::id'), dont use sudo. Be brave! :)")
+    fail("Sorry(id), this module requires you to be ROOT \
+(not '$::id'), dont use sudo. Be brave! :)")
   }
   if ($::whoami == 'root') {} else {
-    fail("Sorry(whoami), this module requires you to be ROOT (not '$::whoami'), don't use sudo. Be brave! :)")
+    fail("Sorry(whoami), this module requires you to be ROOT \
+(not '$::whoami'), don't use sudo. Be brave! :)")
   }
 
-  #vcsrepo { '/root/git/puppet-vcsrepo-test-sakura':
-  #  ensure   => present, # latest?
-  #  provider => git,
-  #  source   => 'git://github.com/palladius/sakura.git'
-  #}
+  vcsrepo { '/root/git/puppet-vcsrepo-test-sakura':
+    ensure   => present, # latest?
+    provider => git,
+    source   => 'git://github.com/palladius/sakura.git'
+  }
 
   cron { "periodically update rump from Riccardo github and execute":
-      ensure      => present,
-      command     => "$basepath/sbin/rump-update-and-execute.sh",
-      user        => 'root',
-      environment => ["PATH=$normal_path:$root_path_addon","MAILTO=$cronemail"], # this is from site.pp
-      minute      => [1,16,31,46],
-      require     => File["$basepath/sbin/rump-update-and-execute.sh"],
+    ensure      => present,
+    command     => "$basepath/sbin/rump-update-and-execute.sh",
+    user        => 'root',
+    environment => [
+      "PATH=$normal_path:$root_path_addon",
+      "MAILTO=${sauce::cronemail}"],
+    minute      => [1,16,31,46],
+    require     => File["$basepath/sbin/rump-update-and-execute.sh"],
   }
 
 }
