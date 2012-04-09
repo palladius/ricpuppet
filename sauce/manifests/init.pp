@@ -17,7 +17,7 @@
 #   include  'sauce':
 class sauce () {
   include sauce::legacy   # remove legacy stuff
-  include sauce::os       # Adds OS specific code! (Recafctorung Mac OS/X out of here!)
+  #include sauce::os       # Adds OS specific code! (Recafctorung Mac OS/X out of here!)
   #include vcsrepo
 
   $version = '1.2.14'
