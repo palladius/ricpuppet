@@ -17,9 +17,10 @@
 #   include  'sauce':
 class sauce () {
   include sauce::legacy   # remove legacy stuff
+  include sauce::os       # Adds OS specific code! (Recafctorung Mac OS/X out of here!)
   #include vcsrepo
 
-  $version = '1.2.13'
+  $version = '1.2.14'
   $verbose = true
   $basepath = '/opt/palladius'
   $default_poweruser_name  = 'riccardo'
@@ -31,6 +32,7 @@ class sauce () {
   $dropbox_sauce_dir = "$poweruser_home/Dropbox/tmp/sauce/" # pers stuff
   $flavour = 'in bianco' # TODO remove this: its not changeable. Maybe a Facter?
   $history = '
+1.2.14 20120409 Adding sauce::os stuff (refactoring operating system stuff).
 1.2.13 20120407 Linting, fixing bugs, IT WORKS now.
 1.2.12 20120403 nothing really, just restored old file after a few days missing!
 1.2.11 20120330 updated cron dropbox cleanup
