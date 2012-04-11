@@ -1,6 +1,8 @@
 RicPuppet
 =========
 
+[![Build Status](https://secure.travis-ci.org/palladius/ricpuppet.png)](http://travis-ci.org/palladius/ricpuppet)
+
 Hi everybody, welcome to my puppet modules.
 
 This has the aim of installing modules more for fun than for actual servers
