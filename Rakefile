@@ -1,4 +1,17 @@
+require 'rake'
 
-# Try then: 'rake lint'
-require 'puppet-lint/tasks/puppet-lint'
+begin
+  require 'rspec/core/rake_task'
+  require 'puppet-lint/tasks/puppet-lint'
+rescue LoadError
+  require 'rubygems'
+  retry
+end
 
+RSpec::Core::RakeTask.new(:spec) do |t|
+  t.pattern = '_spec/*/*_spec.rb'
+end
+
+task :test => [:spec, :lint]
+
+task :default => :test
