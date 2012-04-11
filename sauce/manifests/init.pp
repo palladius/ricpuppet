@@ -20,7 +20,7 @@ class sauce () {
   #include sauce::os       # Adds OS specific code! (Recafctorung Mac OS/X out of here!)
   #include vcsrepo
 
-  $version = '1.2.14'
+  $version = '1.2.15'
   $verbose = true
   $basepath = '/opt/palladius'
   $default_poweruser_name  = 'riccardo'
@@ -32,6 +32,7 @@ class sauce () {
   $dropbox_sauce_dir = "$poweruser_home/Dropbox/tmp/sauce/" # pers stuff
   $flavour = 'in bianco' # TODO remove this: its not changeable. Maybe a Facter?
   $history = '
+1.2.15 20120411 Adding geo_city and geo_stuff to facter interesting things
 1.2.14 20120409 Adding sauce::os stuff (refactoring operating system stuff).
 1.2.13 20120407 Linting, fixing bugs, IT WORKS now.
 1.2.12 20120403 nothing really, just restored old file after a few days missing!
@@ -70,9 +71,15 @@ class sauce () {
     'virtual','machine_description',
     'operatingsystem','operatingsystemrelease',
     'architecture','uniqueid','productname',
-    #'sshrsakey', # big but interesting :)
     'memorysize', 'processor', 'processorcount', # RAM e uP
+		'geo_city', 'mynetwork', 'gic_home', # available with Riccardo GIC facts
   ]
+
+	# stuff which is big so I want to see it but NOT in the synoptic
+	$facter_big_facts = [
+    'sshrsakey', # big but interesting :)
+
+	]
 
   $library_user_home = get_home  # test ruby library
 
