@@ -8,3 +8,6 @@ group :test do
   gem 'rspec', '>= 2.8.0'
   gem 'rspec-puppet', '>= 0.1.1'
 end
+
+gem 'puppet'
+gem 'facter'
