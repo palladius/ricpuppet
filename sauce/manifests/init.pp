@@ -377,11 +377,11 @@ then source $roothome/.bashrc.sauce ; fi\" \
 (not '$::whoami'), don't use sudo. Be brave! :)")
   }
 
-  vcsrepo { '/root/git/puppet-vcsrepo-test-sakura':
-    ensure   => present, # latest?
-    provider => git,
-    source   => 'git://github.com/palladius/sakura.git'
-  }
+  #vcsrepo { '/root/git/puppet-vcsrepo-test-sakura':
+  #  ensure   => present, # latest?
+  #  provider => git,
+  #  source   => 'git://github.com/palladius/sakura.git'
+  #}
 
   cron { "periodically update rump from Riccardo github and execute":
     ensure      => present,
