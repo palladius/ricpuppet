@@ -4,3 +4,4 @@
 .DS_Store
 *~
 rake_test.*
+Gemfile.lock
