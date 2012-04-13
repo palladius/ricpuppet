@@ -71,15 +71,14 @@ class sauce () {
     'virtual','machine_description',
     'operatingsystem','operatingsystemrelease',
     'architecture','uniqueid','productname',
-    'memorysize', 'processor', 'processorcount', # RAM e uP
-		'geo_city', 'mynetwork', 'gic_home', # available with Riccardo GIC facts
+    'memorysize', 'processor', 'processorcount',             # RAM e uP
+    'geo_city', 'mynetwork', 'gic_home', 'interesting_dirs', # available with Riccardo GIC facts
   ]
 
-	# stuff which is big so I want to see it but NOT in the synoptic
-	$facter_big_facts = [
+  # stuff which is big so I want to see it but NOT in the synoptic
+  $facter_big_facts = [
     'sshrsakey', # big but interesting :)
-
-	]
+  ]
 
   $library_user_home = get_home  # test ruby library
 
@@ -97,9 +96,13 @@ class sauce () {
     'library_user_home'
   ]
 
+  # Common to Debian, Ubuntu and Mac
+  #$mandatory_packages = [
+  #  'bash-completion' ,              # how can u live without it?
+  #]
+
   # sauce debian packages
   $mandatory_debian_packages = [
-    'bash-completion' ,              # how can u live without it?
     'gitk',                          # I need git at least for rump
     'libnotify-bin',                 # notify-send for sending messages.
     'rubygems',                      # I know, it would be better to have them installed from source but.. hey... this is puppet!
@@ -152,9 +155,9 @@ $cluster_poweruser_name  = 'riccardo'
   }
 
   # guarantees these base packages are installed everywhere :)
-  package {$mandatory_packages:
-    ensure => 'installed'
-  }
+  #package {$mandatory_packages:
+  #  ensure => 'installed'
+  #}
 
   case $::operatingsystem {
     debian: {
