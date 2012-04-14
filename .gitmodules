@@ -4,3 +4,6 @@
 [submodule "homebrew"]
 	path = homebrew
 	url = git://github.com/jedi4ever/puppet-homebrew.git
+[submodule "vcsrepo"]
+	path = vcsrepo
+	url = git://github.com/puppetlabs/puppet-vcsrepo
