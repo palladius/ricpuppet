@@ -1,3 +1,6 @@
 [submodule "irc-reporter"]
 	path = irc-reporter
 	url = https://github.com/jamtur01/puppet-irc.git
+[submodule "homebrew"]
+	path = homebrew
+	url = git://github.com/jedi4ever/puppet-homebrew.git
