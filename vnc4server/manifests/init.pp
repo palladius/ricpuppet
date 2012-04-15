@@ -4,8 +4,6 @@
 # a secret password you can never guess!!!
 #
 # Parameters:
-#   foo: This parameter is used for... or
-#
 #   None at the moment
 
 # Actions:
@@ -15,6 +13,8 @@
 #   class { 'vnc4server' }
 
 class vnc4server () {
+  $version = '0.9.2'
+  include sauce
 
   package { ['vnc4server','vnc-java']:
     ensure  => 'installed',
@@ -30,7 +30,8 @@ class vnc4server () {
     owner  => 'root',
     content => template('vnc4server/passwd'),
     mode   => '0600',
-    require => File[$sauce::basedir],
+    require => File['/root/.vnc/'],
+    #TODO notify service in some way?!?
   }
 
 } #/Class vnc4server
