@@ -20,7 +20,7 @@ class sauce () {
   #include sauce::os       # Adds OS specific code! (Recafctorung Mac OS/X out of here!)
   #include vcsrepo
 
-  $version = '1.2.15'
+  $version = '1.2.16'
   $verbose = true
   $basepath = '/opt/palladius'
   $default_poweruser_name  = 'riccardo'
@@ -32,6 +32,7 @@ class sauce () {
   $dropbox_sauce_dir = "$poweruser_home/Dropbox/tmp/sauce/" # pers stuff
   $flavour = 'in bianco' # TODO remove this: its not changeable. Maybe a Facter?
   $history = '
+1.2.16 20120415 Adding gem :rest_client for geo_ip facter!
 1.2.15 20120411 Adding geo_city and geo_stuff to facter interesting things
 1.2.14 20120409 Adding sauce::os stuff (refactoring operating system stuff).
 1.2.13 20120407 Linting, fixing bugs, IT WORKS now.
@@ -120,6 +121,7 @@ class sauce () {
     'xmpp4r-simple' ,   # Jabber notifications
     'ric',              # Self gratification :)
     'puppet',           # Self gratification :)
+    'rest_client',      # geo_ip.rb facter
     #sakura             # TODO implement
     #rump               # not really needed yet.. :)
   ]
