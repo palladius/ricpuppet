@@ -2,6 +2,8 @@
 #
 # This class installs logmein-hamachi on Debian systems.
 #
+# Bugs: up to 0.9.4, it works but doesnt trigger the apt-get -f install
+#
 # Parameters:
 # - None (possibly a hostname)
 #
@@ -17,7 +19,7 @@
 class hamachi($hamachi_hostname = $::hostname) {
   require sauce
 
-  $hamachiver = '0.9.4'
+  $hamachiver = '0.9.5'
   # architecture: i386 or what...
   $deb_filename = "logmein-hamachi_2.1.0.17-1_$::architecture.deb"
   #$deb_filename = 'logmein-hamachi_2.1.0.17-1_i386.deb' # this works
@@ -48,12 +50,14 @@ class hamachi($hamachi_hostname = $::hostname) {
     ensure   => latest,
     provider => dpkg,
     source   => $deb_path,
+    notify   => Exec["fix hamachi install once ver $hamachiver"],
     require  => [
       File[$deb_path],
       File["$sauce::basepath/downloadz"],
     ];
   }
 
+  #3. apt-get -f install
   # This should be executed just after installation
   # I make it version dependant so if I change the logic I just have to
   # add the version to make it recheck this script :)
