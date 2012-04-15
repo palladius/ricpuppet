@@ -1,4 +1,5 @@
 *.swp
+.auto*
 .project
 .DS_Store
 *~
