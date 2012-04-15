@@ -3,6 +3,9 @@
 #
 # Example: hamachi create puppet-dundrum 'CH4NG3M3!'
 #
+# Sample:
+# hamachi::network{'puppet-dundrum': pass => 'CH4NG3M3!' }
+#
 define hamachi::network($pass,$autojoin=true) {
   include sauce
   include hamachi
@@ -16,13 +19,12 @@ define hamachi::network($pass,$autojoin=true) {
 
   if ($autojoin) {
     exec {"Joins and touches network $name":
-      command => "hamachi join '$name' '$pass' && touch $sauce::basepath/hamachi-joined-$name.ok",
+      command => "touch $sauce::basepath/hamachi-prejoin-$name.touch &&
+  hamachi join '$name' '$pass' &&
+  touch $sauce::basepath/hamachi-joined-$name.ok",
       creates => "$sauce::basepath/hamachi-joined-$name.ok",
       path    => $sauce::normal_path;
     }
   }
 
 }
-
-# Sample:
-# hamachi::network{'puppet-dundrum': pass => 'CH4NG3M3!' }

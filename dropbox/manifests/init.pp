@@ -1,28 +1,30 @@
 # Class: dropbox
 #
-# The 'dropbox' class ...
+# Installs Dropbox on a Linux machine
 #
 # Parameters:
-#   foo: This parameter is used for... or
+#   user: This parameter will be used in the future for the
+#    username. At the moment I cant cos it would mean putting
+#    user and password in github :)
 #
-#   None at the moment
-
 # Actions:
-#   ensure that the machine has ...
+#   ensure that the machine has Dropbox package installed
 #
 # Sample Usage:
-#   class { 'dropbox' }
-
+#   include 'dropbox'
+#
 class dropbox (user = 'riccardo') {
+  #confine operatingsystem => Debian / Ubuntu
 
   package { ['nautilus-dropbox']: 
     ensure  => 'installed',
+    require => File['/etc/apt/sources.list.d/dropbox.list'],
   }
 
   # apt-get -f install dopo?!?
 
   ## TEMPLATES
-  file { "/etc/apt/sources.list.d/dropbox.list":
+  file { '/etc/apt/sources.list.d/dropbox.list':
     ensure  => present,
     content => template('dropbox/dropbox.list'),
   }

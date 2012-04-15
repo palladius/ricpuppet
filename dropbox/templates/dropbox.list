@@ -1,1 +1,1 @@
-# deb http://linux.dropbox.com/ubuntu oneiric main # disabled on upgrade to oneiric
+deb http://linux.dropbox.com/ubuntu oneiric main
