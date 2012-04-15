@@ -13,7 +13,7 @@
 # Sample Usage:
 #   include 'dropbox'
 #
-class dropbox (user = 'riccardo') {
+class dropbox ($user = 'riccardo') {
   #confine operatingsystem => Debian / Ubuntu
 
   package { ['nautilus-dropbox']: 
@@ -22,6 +22,7 @@ class dropbox (user = 'riccardo') {
   }
 
   # apt-get -f install dopo?!?
+  # logs in as '$user' and '$password' ...
 
   ## TEMPLATES
   file { '/etc/apt/sources.list.d/dropbox.list':
