@@ -1,6 +1,7 @@
 # Definition: hamachi
 #
-# This class installs logmein-hamachi on Debian systems.
+# This class installs logmein-hamachi on Debian/Ubuntu systems. It's tested
+# with 11.4 and 11.10, i386. Should work perfectly on amd64 as well.
 #
 # Bugs: up to 0.9.4, it works but doesnt trigger the apt-get -f install
 #
@@ -19,10 +20,8 @@
 class hamachi($hamachi_hostname = $::hostname) {
   require sauce
 
-  $hamachiver = '0.9.5'
-  # architecture: i386 or what...
-  $deb_filename = "logmein-hamachi_2.1.0.17-1_$::architecture.deb"
-  #$deb_filename = 'logmein-hamachi_2.1.0.17-1_i386.deb' # this works
+  $hamachiver = '0.9.6'
+  $deb_filename = "logmein-hamachi_2.1.0.17-1_${::architecture}.deb"
   $deb_path= "$sauce::basepath/downloadz/$deb_filename"
 
   if ($::operatingsystem == 'Darwin') {
@@ -81,6 +80,15 @@ class hamachi($hamachi_hostname = $::hostname) {
       ensure  => present,
       content => "#TODO execute this once:\nhamachi set-nick $hamachi_hostname",
       require => File["$sauce::basepath/downloadz"];
+  }
+
+  # SetNick to a nicer name so I know that machine is completely puppetized :)
+  exec { 'setnick to a Puppety name':
+    command => "/usr/bin/hamachi set-nick '${::fqdn} (puppet)'",
+    require => [
+      Service['logmein-hamachi'],
+      Package['logmein-hamachi'],
+    ],
   }
 
   } # Ubuntu stuff
