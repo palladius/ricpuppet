@@ -121,7 +121,7 @@ class sauce () {
     'xmpp4r-simple' ,   # Jabber notifications
     'ric',              # Self gratification :)
     'puppet',           # Self gratification :)
-    'rest_client',      # geo_ip.rb facter
+    'rest-client',      # geo_ip.rb facter
     #sakura             # TODO implement
     #rump               # not really needed yet.. :)
   ]
