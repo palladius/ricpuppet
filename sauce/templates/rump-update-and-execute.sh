@@ -16,9 +16,8 @@ if [ -d "<%= poweruser_home %>/Dropbox/tmp/sauce/" ]; then
 fi
 
 cd ~/git/puppet-rump && 
-	make &&
 	git pull origin master &&  
-	git submodule foreach git pull origin master && 
+	make &&
 	rump go && 
 	touch <%= basepath %>/cron-rump-last-update-v$VER.touch
 
