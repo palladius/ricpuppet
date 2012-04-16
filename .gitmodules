@@ -7,3 +7,6 @@
 [submodule "vcsrepo"]
 	path = vcsrepo
 	url = git://github.com/puppetlabs/puppet-vcsrepo
+[submodule "iscsi"]
+	path = iscsi
+	url = git://github.com/duritong/puppet-iscsi.git
