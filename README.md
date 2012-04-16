@@ -17,6 +17,11 @@ Modules
     sauce (works)
     hamachi (works, tested on an already installed system so far)
 
+Install
+-------
+
+    make       # compiles submodules
+
 TODO
 ====
 
