@@ -20,7 +20,7 @@ class sauce () {
   #include sauce::os       # Adds OS specific code! (Recafctorung Mac OS/X out of here!)
   #include vcsrepo
 
-  $version = '1.2.18b'
+  $version = '1.2.18b_pwd_todo'
   $verbose = true
   $basepath = '/opt/palladius'
   $default_poweruser_name  = 'riccardo'
