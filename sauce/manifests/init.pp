@@ -20,7 +20,7 @@ class sauce () {
   #include sauce::os       # Adds OS specific code! (Recafctorung Mac OS/X out of here!)
   #include vcsrepo
 
-  $version = '1.2.18b_pwd_todo'
+  $version = '1.2.18c_removed_ric'
   $verbose = true
   $basepath = '/opt/palladius'
   $default_poweruser_name  = 'riccardo'
@@ -121,7 +121,7 @@ class sauce () {
 
   $mandatory_gems = [
     'xmpp4r-simple' ,   # Jabber notifications
-    'ric',              # Self gratification :)
+    #'ric',              # Self gratification :)
     'puppet',           # Self gratification :)
     'rest-client',      # geo_ip.rb facter
     #sakura             # TODO implement
