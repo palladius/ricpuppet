@@ -10,3 +10,6 @@
 [submodule "iscsi"]
 	path = iscsi
 	url = git://github.com/duritong/puppet-iscsi.git
+[submodule "mediawiki"]
+	path = mediawiki
+	url = git://github.com/carlasouza/puppet-mediawiki.git
